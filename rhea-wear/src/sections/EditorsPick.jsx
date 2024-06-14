@@ -2,7 +2,7 @@ import React from "react";
 
 function EditorsPick() {
   return (
-    <div className="pt-32 px-5  sm:px-40">
+    <div className="pt-32 px-10  sm:px-40">
       <div className="flex flex-col items-center">
         <h1 className="font-bold text-[#252B42] text-2xl">EDITOR'S PICK</h1>
         <p className="text-[#737373] text-sm pt-5 pb-3">

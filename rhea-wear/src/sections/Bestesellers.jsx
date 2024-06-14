@@ -6,7 +6,7 @@ import { Card } from "react-bootstrap";
 
 function Bestesellers() {
   return (
-    <div className="pt-32 px-5  sm:px-40">
+    <div className="pt-32 px-10  sm:px-40">
       <div className=" p flex flex-col  items-center">
         <h2 className="text-[#737373] text-xl font-medium ">
           Featured Products
