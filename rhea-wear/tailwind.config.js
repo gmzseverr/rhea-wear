@@ -2,6 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      sm: "480px",
+      md: "760px",
+      lg: "1024px",
+      xl: "1280px",
+    },
     extend: {
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],

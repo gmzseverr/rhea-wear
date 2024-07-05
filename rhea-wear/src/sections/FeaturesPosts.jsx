@@ -11,7 +11,7 @@ function FeaturesPosts() {
           Features Posts
         </h1>
         <p className="text-sm text-[#737373] pb-3 text-center">
-          Problems trying to resolve the conflict between <br /> the two major
+          Problems trying to resolve the conflict between <br /> the two major 
           realms of Classical physics: Newtonian mechanics{" "}
         </p>
       </div>

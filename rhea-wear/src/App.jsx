@@ -5,7 +5,8 @@ import HomePage from "./pages/HomePage";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 import "./index.css";
-import ProductCard from "./components/ProductCard";
+
+import ShopPage from "./pages/ShopPage";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/productCard" element={<ProductCard />} />
+        <Route path="/shop" element={<ShopPage />} />
       </Routes>
       <Footer />
     </Router>

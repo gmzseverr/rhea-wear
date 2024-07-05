@@ -6,8 +6,8 @@ import { Card } from "react-bootstrap";
 
 function Bestesellers() {
   return (
-    <div className="pt-32 px-10  sm:px-40">
-      <div className=" p flex flex-col  items-center">
+    <div className="pt-32 mx-20  sm:px-20">
+      <div className=" flex flex-col items-center">
         <h2 className="text-[#737373] text-xl font-medium ">
           Featured Products
         </h2>
@@ -18,7 +18,7 @@ function Bestesellers() {
           Problems trying to resolve the conflict between{" "}
         </p>
       </div>
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-10">
+      <section className=" grid grid-cols-4 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-10">
         <div className="w-[239px] h-[615px]  ">
           <img src="src/assets/hero-2.png" className="h-[427px] object-cover" />
           <div className="flex flex-col items-center py-5">

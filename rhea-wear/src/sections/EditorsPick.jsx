@@ -5,7 +5,7 @@ function EditorsPick() {
     <div className="pt-32 px-10  sm:px-40">
       <div className="flex flex-col items-center">
         <h1 className="font-bold text-[#252B42] text-2xl">EDITOR'S PICK</h1>
-        <p className="text-[#737373] text-sm pt-5 pb-3">
+        <p className="text-[#737373] text-sm pt-3 pb-5">
           Problems trying to resolve the conflict between
         </p>
       </div>
@@ -38,7 +38,7 @@ function EditorsPick() {
               ACCESSORIES
             </button>
           </div>
-          <div className="relative w-full h-[243px] overflow-hidden">
+          <div className="relative w-full h-[243px] mb-4 overflow-hidden">
             <img
               src="src/assets/editors4.png"
               className="w-full h-full object-cover"
