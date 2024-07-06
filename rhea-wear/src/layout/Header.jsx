@@ -17,13 +17,13 @@ function Header() {
   };
 
   return (
-    <div className="mx-36 my-7">
-      <div className="flex justify-between items-center">
+    <div className="px-52 sm:px-10 my-7">
+      <div className="flex justify-between items-center sm:justify-around">
         <Link to="/" className="text-[#252B42] font-extrabold text-2xl">
           rhea.
         </Link>
 
-        <nav className="hidden sm:flex space-x-8">
+        <nav className="sm:hidden flex space-x-8">
           <NavLink
             to="/"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
@@ -67,28 +67,29 @@ function Header() {
             Pages
           </NavLink>
         </nav>
-
-        <div className="flex space-x-4 text-[#737373] sm:text-[#23A6F0] font-bold text-sm">
-          <a href="#" className="hidden sm:flex items-center">
-            <FontAwesomeIcon icon={faUser} className="mr-1" />
-            Login / Register
+        <div className="flex items-center space-x-4 sm:text-[#252B42] text-[#23A6F0] font-bold text-sm">
+          <a href="" className="sm:hidden flex items-center gap-1">
+            <FontAwesomeIcon icon={faUser} />
+            <p>Login / Register</p>
           </a>
-          <a href="#" className="flex items-center">
+          <a href="#" className=" flex items-center">
             <FontAwesomeIcon icon={faSearch} />
           </a>
-          <a href="#" className="flex items-center">
+          <a href="#" className=" flex items-center">
             <FontAwesomeIcon icon={faCartShopping} />
           </a>
-          <a href="#" className="hidden sm:flex items-center">
+          <a href="#" className="sm:hidden flex items-center">
             <FontAwesomeIcon icon={faHeart} />
           </a>
-          <button onClick={toggleNav} className="sm:hidden flex items-center">
+
+          <button onClick={toggleNav} className="hidden items-center">
             <FontAwesomeIcon icon={faBars} />
           </button>
         </div>
       </div>
 
-      <div className={`${isNavOpen ? "block" : "hidden"} sm:hidden mt-4`}>
+      {/* Mobile Navigation */}
+      <div className={`${isNavOpen ? "block" : "hidden"} mt-4 sm:hidden`}>
         <nav className="flex flex-col space-y-4 items-center">
           <NavLink
             to="/"
@@ -98,7 +99,7 @@ function Header() {
             Home
           </NavLink>
           <NavLink
-            to="/productCard"
+            to="/shop"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
             activeClassName="text-[#23A6F0]"
           >

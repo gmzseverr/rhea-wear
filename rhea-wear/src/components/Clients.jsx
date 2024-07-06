@@ -11,20 +11,18 @@ import React from "react";
 
 function Clients() {
   return (
-    <div className="bg-gray-100 flex justify-center items-center space-x-8 py-4">
-      <FontAwesomeIcon icon={faHooli} size="2xl" className="text-[#737373]" />
-      <FontAwesomeIcon icon={faLyft} size="2xl" className="text-[#737373]" />
+    <div className="bg-gray-100  flex justify-center items-center space-between  gap-5 py-10">
+      <FontAwesomeIcon icon={faHooli} className="text-[#737373] text-7xl" />
+      <FontAwesomeIcon icon={faLyft} className="text-[#737373] text-7xl" />
       <FontAwesomeIcon
         icon={faPiedPiperHat}
-        size="2xl"
-        className="text-[#737373]"
+        className="text-[#737373] text-7xl"
       />
-      <FontAwesomeIcon icon={faStripe} size="2xl" className="text-[#737373]" />
-      <FontAwesomeIcon icon={faAws} size="2xl" className="text-[#737373]" />
+      <FontAwesomeIcon icon={faStripe} className="text-[#737373] text-7xl" />
+      <FontAwesomeIcon icon={faAws} className="text-[#737373] text-7xl" />
       <FontAwesomeIcon
         icon={faRedditAlien}
-        size="2xl"
-        className="text-[#737373]"
+        className="text-[#737373] text-7xl"
       />
     </div>
   );

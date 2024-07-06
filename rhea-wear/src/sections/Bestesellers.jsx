@@ -1,13 +1,13 @@
 import React from "react";
-import ProductCard from "../components/ProductCard";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
-import { Card } from "react-bootstrap";
+import ProductCard from "../components/ProductCard";
 
 function Bestesellers() {
   return (
-    <div className="pt-32 mx-20  sm:px-20">
-      <div className=" flex flex-col items-center">
+    <div className="pt-32 mx-20  px-20 sm:items-center">
+      <div className=" flex flex-col text-center">
         <h2 className="text-[#737373] text-xl font-medium ">
           Featured Products
         </h2>
@@ -18,7 +18,7 @@ function Bestesellers() {
           Problems trying to resolve the conflict between{" "}
         </p>
       </div>
-      <section className=" grid grid-cols-4 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-10">
+      <section className=" grid grid-cols-4  sm:grid-cols-1 gap-4 pt-10">
         <div className="w-[239px] h-[615px]  ">
           <img src="src/assets/hero-2.png" className="h-[427px] object-cover" />
           <div className="flex flex-col items-center py-5">

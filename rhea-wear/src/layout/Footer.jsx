@@ -10,24 +10,24 @@ function Footer() {
   return (
     <footer>
       <div className="mx-36 my-7">
-        <section className="flex justify-between items-center  flex-col md:flex-row">
-          <div className="text-[#252B42]  font-extrabold text-lg md:mb-0 mb-4 md:self-auto self-start">
+        <section className="flex justify-between items-center sm:flex-col sm:items-start flex-row py-5">
+          <div className="text-[#252B42] font-extrabold text-lg self-start ">
             rhea.
           </div>
-          <div className="flex space-x-4 pr-10 py-5 md:pr-10 ">
+          <div className="flex gap-3 ">
             <a href="#" className="text-[#23A6F0] ">
-              <FontAwesomeIcon icon={faFacebook} size="2x" />
+              <FontAwesomeIcon icon={faFacebook} size="xl" />
             </a>
             <a href="#" className="text-[#23A6F0] ">
-              <FontAwesomeIcon icon={faInstagram} size="2x" />
+              <FontAwesomeIcon icon={faInstagram} size="xl" />
             </a>
             <a href="#" className="text-[#23A6F0]">
-              <FontAwesomeIcon icon={faTwitter} size="2x" />
+              <FontAwesomeIcon icon={faTwitter} size="xl" />
             </a>
           </div>
         </section>
         <hr className="w-full py-5" />
-        <div className="grid lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-1 gap-x-0">
+        <div className="grid grid-cols-5  sm:grid-cols-1 gap-x-0">
           <div className="flex flex-col  ">
             <h3 className="text-[#252B42] font-bold text-base py-7 ">
               Company Info
@@ -78,7 +78,7 @@ function Footer() {
                 placeholder="Your Email"
                 className="bg-[#E6E6E6] rounded-l-md py-3.5 px-3"
               />
-              <button className="bg-[#23A6F0] py-3.5 rounded-r-md px-3  ">
+              <button className="bg-[#23A6F0] py-3.5 rounded-r-md px-3 text-white font-bold  ">
                 Subscribe
               </button>
             </section>

@@ -2,15 +2,15 @@ import React from "react";
 
 function EditorsPick() {
   return (
-    <div className="pt-32 px-10  sm:px-40">
+    <div className="pt-32 sm:px-10  px-40">
       <div className="flex flex-col items-center">
         <h1 className="font-bold text-[#252B42] text-2xl">EDITOR'S PICK</h1>
         <p className="text-[#737373] text-sm pt-3 pb-5">
           Problems trying to resolve the conflict between
         </p>
       </div>
-      <div className="flex flex-col  md:flex-row sm:flex-row sm:h-[500px] sm:items-center sm:space-x-4">
-        <div className="relative w-full sm:w-[510px] h-[500px] overflow-hidden mb-4 sm:mb-0">
+      <div className="flex flex-row sm:flex sm:flex-col h-[500px] sm:items-center space-x-4">
+        <div className="relative w-full sm:w-[510px] h-[500px] overflow-hidden sm:mb-4 mb-0">
           <img
             src="src/assets/editors1.png"
             className="w-full h-full object-cover"
@@ -19,7 +19,7 @@ function EditorsPick() {
             MEN
           </button>
         </div>
-        <div className="relative w-full sm:w-[260px] h-[500px] overflow-hidden mb-4 sm:mb-0">
+        <div className="relative w-full sm:w-[260px] h-[500px] overflow-hidden sm:mb-4 mb-0">
           <img
             src="src/assets/editors2.png"
             className="w-full h-full object-cover"
@@ -38,7 +38,7 @@ function EditorsPick() {
               ACCESSORIES
             </button>
           </div>
-          <div className="relative w-full h-[243px] mb-4 overflow-hidden">
+          <div className="relative w-full h-[243px] sm:mb-4 overflow-hidden">
             <img
               src="src/assets/editors4.png"
               className="w-full h-full object-cover"
