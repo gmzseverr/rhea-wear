@@ -6,7 +6,7 @@ function ShopImageSection() {
       <section className="grid grid-cols-5 gap-2   sm:flex sm:flex-col ">
         <div className="relative">
           <img
-            src="src/assets/shopcard1.jpeg"
+            src="public/assets/shopcard1.jpeg"
             alt="Image 1"
             className="w-full h-auto object-cover"
           />
@@ -17,7 +17,7 @@ function ShopImageSection() {
         </div>
         <div className="relative">
           <img
-            src="src/assets/shopcard2.jpeg"
+            src="public/assets/shopcard2.jpeg"
             alt="Image 2"
             className="w-full h-auto object-cover"
           />
@@ -28,7 +28,7 @@ function ShopImageSection() {
         </div>
         <div className="relative">
           <img
-            src="src/assets/shopcard3.jpeg"
+            src="public/assets/shopcard3.jpeg"
             alt="Image 3"
             className="w-full h-auto object-cover"
           />
@@ -39,7 +39,7 @@ function ShopImageSection() {
         </div>
         <div className="relative">
           <img
-            src="src/assets/shopcard4.jpeg"
+            src="public/assets/shopcard4.jpeg"
             alt="Image 4"
             className="w-full h-auto object-cover"
           />
@@ -50,7 +50,7 @@ function ShopImageSection() {
         </div>
         <div className="relative">
           <img
-            src="src/assets/shopcard5.jpeg"
+            src="public/assets/shopcard5.jpeg"
             alt="Image 5"
             className="w-full h-auto object-cover"
           />

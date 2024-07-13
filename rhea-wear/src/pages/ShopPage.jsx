@@ -83,12 +83,12 @@ function ShopPage() {
               <div className="flex gap-2">
                 <FontAwesomeIcon
                   icon={faGrip}
-                  size="l"
+                  size="lg"
                   className="border border-gray-300 rounded-md p-1 cursor-pointer hover:bg-gray-200 text-[#252B42]"
                 />
                 <FontAwesomeIcon
                   icon={faListUl}
-                  size="l"
+                  size="lg"
                   className="border border-gray-300 rounded-md p-1 cursor-pointer hover:bg-gray-200 text-gray-500"
                 />
               </div>
@@ -110,7 +110,6 @@ function ShopPage() {
           <PaginationShop />
         </section>
       </div>
-
       <div className="w-full bg-zinc-100">
         <Clients />
       </div>

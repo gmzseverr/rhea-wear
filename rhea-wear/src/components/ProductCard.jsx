@@ -27,7 +27,7 @@ function ProductCard({ product }) {
             <p className="pr-2 text-[#BDBDBD]">{product.price}</p>
             <p className="text-[#23856D]">{product.discountedPrice}</p>
           </div>
-          <div className="flex">
+          <div className="flex pt-2">
             {product.colors.map((color, index) => (
               <FontAwesomeIcon
                 key={index}

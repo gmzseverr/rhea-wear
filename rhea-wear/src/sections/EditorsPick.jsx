@@ -12,7 +12,7 @@ function EditorsPick() {
       <div className="flex flex-row sm:flex sm:flex-col h-[500px] sm:items-center space-x-4">
         <div className="relative w-full sm:w-[510px] h-[500px] overflow-hidden sm:mb-4 mb-0">
           <img
-            src="src/assets/editors1.png"
+            src="public/assets/editors1.png"
             className="w-full h-full object-cover"
           />
           <button className="absolute bottom-4 left-4 bg-white text-black px-4 py-2 font-bold text-base">
@@ -21,7 +21,7 @@ function EditorsPick() {
         </div>
         <div className="relative w-full sm:w-[260px] h-[500px] overflow-hidden sm:mb-4 mb-0">
           <img
-            src="src/assets/editors2.png"
+            src="public/assets/editors2.png"
             className="w-full h-full object-cover"
           />
           <button className="absolute bottom-4 left-4 bg-white text-black px-4 py-2 font-bold text-base">
@@ -31,7 +31,7 @@ function EditorsPick() {
         <div className="w-full sm:w-1/3 flex flex-col space-y-4">
           <div className="relative w-full h-[243px] overflow-hidden">
             <img
-              src="src/assets/editors3.png"
+              src="public/assets/editors3.png"
               className="w-full h-full object-cover object-top"
             />
             <button className="absolute bottom-4 left-4 bg-white text-black px-4 py-2 font-bold text-base">
@@ -40,7 +40,7 @@ function EditorsPick() {
           </div>
           <div className="relative w-full h-[243px] sm:mb-4 overflow-hidden">
             <img
-              src="src/assets/editors4.png"
+              src="public/assets/editors4.png"
               className="w-full h-full object-cover"
             />
             <button className="absolute bottom-4 left-4 bg-white text-black px-4 py-2 font-bold text-base">

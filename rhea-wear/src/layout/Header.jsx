@@ -8,12 +8,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Link, NavLink } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 
 function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
+  };
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
   };
 
   return (
@@ -24,45 +30,43 @@ function Header() {
         </Link>
 
         <nav className="sm:hidden flex space-x-8">
-          <NavLink
-            to="/"
-            className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
-          >
-            Home
-          </NavLink>
+          <div>
+            <NavLink
+              onClick={toggleVisibility}
+              to="/"
+              className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+            >
+              <Dropdown isVisible={isVisible} />
+              Home
+            </NavLink>
+          </div>
           <NavLink
             to="/shop"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             Shop
           </NavLink>
           <NavLink
             to="/about"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             About
           </NavLink>
           <NavLink
             to="/blog"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             Blog
           </NavLink>
           <NavLink
             to="/contact"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             Contact
           </NavLink>
           <NavLink
             to="/pages"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             Pages
           </NavLink>
@@ -94,21 +98,18 @@ function Header() {
           <NavLink
             to="/"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             Home
           </NavLink>
           <NavLink
             to="/shop"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             Shop
           </NavLink>
           <NavLink
             to="/about"
             className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-            activeClassName="text-[#23A6F0]"
           >
             About
           </NavLink>

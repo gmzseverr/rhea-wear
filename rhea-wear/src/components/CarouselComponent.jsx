@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Carousel,
   CarouselItem,
@@ -10,26 +9,26 @@ import {
 
 const items = [
   {
-    src: "src/assets/carousel1.png",
+    src: "public/assets/carousel1.png",
     altText: "Slide 1",
     caption: "Slide 1",
     key: 1,
   },
   {
-    src: "src/assets/carusel2.jpeg",
+    src: "public/assets/carusel2.jpeg",
     altText: "Slide 2",
     caption: "Slide 2",
     key: 2,
   },
   {
-    src: "src/assets/carusel3.jpeg",
+    src: "public/assets/carusel3.jpeg",
     altText: "Slide 3",
     caption: "Slide 3",
     key: 3,
   },
 ];
 
-function Example(args) {
+function CarouselComponent(args) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
@@ -67,32 +66,30 @@ function Example(args) {
   });
 
   return (
-    <div className="pt-20 w-screen">
-      <Carousel
+    <Carousel
+      activeIndex={activeIndex}
+      next={next}
+      previous={previous}
+      {...args}
+    >
+      <CarouselIndicators
+        items={items}
         activeIndex={activeIndex}
-        next={next}
-        previous={previous}
-        {...args}
-      >
-        <CarouselIndicators
-          items={items}
-          activeIndex={activeIndex}
-          onClickHandler={goToIndex}
-        />
-        {slides}
-        <CarouselControl
-          direction="prev"
-          directionText="Previous"
-          onClickHandler={previous}
-        />
-        <CarouselControl
-          direction="next"
-          directionText="Next"
-          onClickHandler={next}
-        />
-      </Carousel>
-    </div>
+        onClickHandler={goToIndex}
+      />
+      {slides}
+      <CarouselControl
+        direction="prev"
+        directionText="Previous"
+        onClickHandler={previous}
+      />
+      <CarouselControl
+        direction="next"
+        directionText="Next"
+        onClickHandler={next}
+      />
+    </Carousel>
   );
 }
 
-export default Example;
+export default CarouselComponent;

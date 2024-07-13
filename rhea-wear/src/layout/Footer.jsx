@@ -26,7 +26,7 @@ function Footer() {
             </a>
           </div>
         </section>
-        <hr className="w-full py-5" />
+
         <div className="grid grid-cols-5  sm:grid-cols-1 gap-x-0">
           <div className="flex flex-col  ">
             <h3 className="text-[#252B42] font-bold text-base py-7 ">
