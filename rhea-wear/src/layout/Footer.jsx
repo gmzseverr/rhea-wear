@@ -33,7 +33,7 @@ function Footer() {
               Company Info
             </h3>
             <ul className="text-[#737373] font-bold text-sm space-y-4 ">
-              <li href="">About Us</li>
+              <li href="/about">About Us</li>
               <li href="">Carrier</li>
               <li href="">We are hiring</li>
               <li href="">Blog</li>

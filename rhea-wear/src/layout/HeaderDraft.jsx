@@ -11,6 +11,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { NavLink } from "react-router-dom";
 
 function HeaderDraft() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -56,40 +57,60 @@ function HeaderDraft() {
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/team">Team</NavDropdown.Item>
                   </NavDropdown>
-                  <Nav.Link
-                    href="/shop"
-                    className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-                  >
-                    Shop
-                  </Nav.Link>
-                  <Nav.Link
-                    href="/about"
-                    className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-                  >
-                    About
-                  </Nav.Link>
-                  <Nav.Link
-                    href="/blog"
-                    className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-                  >
-                    Blog
-                  </Nav.Link>
-                  <Nav.Link
-                    href="/contact"
-                    className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
-                  >
-                    Contact
-                  </Nav.Link>
+                  <div className="flex gap-8 ">
+                    <Nav.Link
+                      href="/shop"
+                      className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+                    >
+                      Shop
+                    </Nav.Link>
+                    <Nav.Link
+                      href="/about"
+                      className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+                    >
+                      About
+                    </Nav.Link>
+                    <Nav.Link
+                      href="/blog"
+                      className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+                    >
+                      Blog
+                    </Nav.Link>
+                    <Nav.Link
+                      href="/contact"
+                      className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+                    >
+                      Contact
+                    </Nav.Link>
+                    <Nav.Link
+                      href="/pages"
+                      className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+                    >
+                      Pages
+                    </Nav.Link>
+                  </div>
                 </Nav>
               </Navbar.Collapse>
             </section>
           </Container>
         </Navbar>
         <div className="flex items-center space-x-4 sm:text-[#252B42] text-[#23A6F0] font-bold text-sm">
-          <a href="" className="sm:hidden flex items-center gap-1">
-            <FontAwesomeIcon icon={faUser} />
-            <p>Login / Register</p>
-          </a>
+          <FontAwesomeIcon icon={faUser} />
+          <NavLink
+            to="/login"
+            className="sm:hidden flex items-center gap-1"
+            activeClassName="active-link"
+          >
+            <p>Login</p>
+          </NavLink>
+          <p className="sm:hidden flex items-center gap-1">/</p>
+          <NavLink
+            to="/signup"
+            className="sm:hidden flex items-center gap-1"
+            activeClassName="active-link"
+          >
+            <p>Register</p>
+          </NavLink>
           <a href="#" className=" flex items-center">
             <FontAwesomeIcon icon={faSearch} />
           </a>

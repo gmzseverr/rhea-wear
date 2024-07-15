@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Full-Stack Developer",
+    "name": "Gamze Sever",
+    "image": "public/assets/hero-2.png",
+    "description": "the quick fox jumps over the lazy dog"
+  },
+  {
+    "id": 2,
+    "title": "Project Owner",
+    "name": "Erhan Fırat",
+    "image": "public/assets/carusel2.png",
+    "description": "the quick fox jumps over the lazy dog"
+  },
+  {
+    "id": 3,
+    "title": "Scrum Master",
+    "name": "Gökhan Özdemir",
+    "image": "public/assets/editors3.png",
+    "description": "the quick fox jumps over the lazy dog"
+  }
+]

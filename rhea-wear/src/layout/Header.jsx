@@ -29,7 +29,7 @@ function Header() {
           rhea.
         </Link>
 
-        <nav className="sm:hidden flex space-x-8">
+        <nav className="sm:hidden flex space-x-8 ">
           <div>
             <NavLink
               onClick={toggleVisibility}
@@ -72,10 +72,22 @@ function Header() {
           </NavLink>
         </nav>
         <div className="flex items-center space-x-4 sm:text-[#252B42] text-[#23A6F0] font-bold text-sm">
-          <a href="" className="sm:hidden flex items-center gap-1">
-            <FontAwesomeIcon icon={faUser} />
-            <p>Login / Register</p>
-          </a>
+          <FontAwesomeIcon icon={faUser} />
+          <NavLink
+            to="/login"
+            className="sm:hidden flex items-center gap-1"
+            activeClassName="active-link"
+          >
+            <p>Login</p>
+          </NavLink>
+          <p className="sm:hidden flex items-center gap-1">/</p>
+          <NavLink
+            to="/signup"
+            className="sm:hidden flex items-center gap-1"
+            activeClassName="active-link"
+          >
+            <p>Register</p>
+          </NavLink>
           <a href="#" className=" flex items-center">
             <FontAwesomeIcon icon={faSearch} />
           </a>

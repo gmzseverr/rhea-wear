@@ -12,6 +12,9 @@ import ProductDetail from "./pages/ProductDetail";
 import ContactPage from "./pages/ContactPage";
 import TeamPage from "./pages/TeamPage";
 import HeaderDraft from "./layout/HeaderDraft";
+import AboutUsPage from "./pages/AboutUsPage";
+import AboutUsImage from "./sections/AboutUsImage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -36,6 +39,9 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/team" element={<TeamPage />} />
+        <Route path="/about" element={<AboutUsPage />} />
+        <Route path="/blog" element={<AboutUsImage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
       <Footer />
     </Router>

@@ -4,7 +4,7 @@ import TeamMembers from "../sections/TeamMembers";
 
 function TeamPage() {
   return (
-    <div>
+    <div className="bg-">
       <section className="flex flex-col items-center sm:px-10 text-center">
         <h5 className="text-[#737373] font-bold py-3">WHAT WE DO</h5>
         <h2 className="text-5xl font-bold">Innovation tailored for you</h2>
@@ -57,6 +57,18 @@ function TeamPage() {
       </section>
       <TeamPageImageSection />
       <TeamMembers />
+      <section className=" flex flex-col items-center pt-52 sm:px-10 px-40">
+        <h2 className="text-4xl font-bold py-4 text-center ">
+          Start your 14 days free trial
+        </h2>
+        <p className="text-sm text-[#737373] pb-4 w-1/3 text-center ">
+          Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
+          RELIT official consequent.
+        </p>
+        <button className="inline-flex justify-center gap-x-1.5 rounded-md bg-[#23A6F0] px-3 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-sky-300">
+          Try it free now
+        </button>
+      </section>
     </div>
   );
 }

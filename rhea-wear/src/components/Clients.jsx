@@ -11,7 +11,7 @@ import React from "react";
 
 function Clients() {
   return (
-    <div className="bg-gray-100  flex justify-center items-center space-between  gap-5 py-10">
+    <div className="bg-zinc-50 sm:flex-col flex justify-center items-center space-between  gap-5 py-10">
       <FontAwesomeIcon icon={faHooli} className="text-[#737373] text-7xl" />
       <FontAwesomeIcon icon={faLyft} className="text-[#737373] text-7xl" />
       <FontAwesomeIcon
