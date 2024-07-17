@@ -6,7 +6,7 @@ import TeamMembers from "../sections/TeamMembers";
 function AboutUsPage() {
   return (
     <div className="">
-      <div className="flex sm:flex-col sm:items-center  ">
+      <div className="flex sm:flex-col sm:items-center md:items-center  ">
         <section className=" flex flex-col items-start justify-center  pt-32 sm:px-10 px-40 sm:items-center ">
           <h5 className="font-bold py-2">ABOUT COMPANY</h5>
           <h1 className="text-6xl font-bold py-2">ABOUT US</h1>

@@ -1,10 +1,10 @@
 import React from "react";
-import { Form } from "reactstrap";
+import SignUpForm from "../components/SignUpForm";
 
 function SignupPage() {
   return (
     <div className="pt-32 sm:px-10 px-40">
-      <Form></Form>
+      <SignUpForm />
     </div>
   );
 }
