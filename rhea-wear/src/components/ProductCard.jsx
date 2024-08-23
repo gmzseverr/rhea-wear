@@ -1,6 +1,5 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
@@ -27,7 +26,7 @@ function ProductCard({ product }) {
             <p className="pr-2 text-[#BDBDBD]">{product.price}</p>
             <p className="text-[#23856D]">{product.discountedPrice}</p>
           </div>
-          <div className="flex pt-2">
+          {/* <div className="flex pt-2">
             {product.colors.map((color, index) => (
               <FontAwesomeIcon
                 key={index}
@@ -36,7 +35,7 @@ function ProductCard({ product }) {
                 style={{ color }}
               />
             ))}
-          </div>
+            </div>*/}
         </div>
       </section>
     </div>

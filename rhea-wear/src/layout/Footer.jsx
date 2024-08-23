@@ -35,7 +35,7 @@ function Footer() {
             <ul className="text-[#737373] font-bold text-sm space-y-4 ">
               <li href="/about">About Us</li>
               <li href="">Carrier</li>
-              <li href="">We are hiring</li>
+              <li href="/deneme">We are hiring</li>
               <li href="">Blog</li>
             </ul>
           </div>

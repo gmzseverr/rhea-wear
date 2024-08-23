@@ -1,4 +1,3 @@
-import { CircleStackIcon } from "@heroicons/react/20/solid";
 import React from "react";
 
 function AboutUsImage() {

@@ -8,6 +8,7 @@ import RowComponent from "../sections/RowComponent.jsx";
 import FeaturesPosts from "../sections/FeaturesPosts.jsx";
 
 function HomePage() {
+  
   return (
     <div>
       <Hero />

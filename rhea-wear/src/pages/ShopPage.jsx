@@ -1,59 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
 import ShopImageSection from "../components/ShopImageSection";
 import DropDownSort from "../components/DropDownSort";
-import PaginationShop from "../components/PaginationShop";
 import Clients from "../components/Clients";
-import { faGrip, faListUl } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import products from "../data/products.json";
-
-/*const products = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: "$19.99",
-    discountedPrice: "$11.90",
-    image: "src/assets/hero-2.png",
-    category: "Clothes",
-    description: "This is a great product for any occasion.",
-    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
-  },
-  {
-    id: 2,
-    name: "Graphic Design",
-    price: "$16.48",
-    discountedPrice: "$6.48",
-    image: "src/assets/editors2.png",
-    category: "Clothes",
-    description: "Perfect for your creative projects.",
-    colors: ["#23A6F0", "#23856D", "#E77C40"],
-  },
-  {
-    id: 3,
-    name: "Graphic Design",
-    price: "$12.58",
-    discountedPrice: "$6.48",
-    image: "src/assets/editors1.png",
-    category: "Clothes",
-    description: "Perfect for your creative projects.",
-    colors: ["#23A6F0", "#23856D", "#E77C40"],
-  },
-  {
-    id: 4,
-    name: "Graphic Design",
-    price: "$22.48",
-    discountedPrice: "$12.48",
-    image: "src/assets/hero-1.png",
-    category: "Clothes",
-    description: "Perfect for your creative projects.",
-    colors: ["#23A6F0", "#23856D", "#E77C40"],
-  },
-];*/
+import { faGrip, faListUl } from "@fortawesome/free-solid-svg-icons";
+import { fetchProducts } from "../redux/actions/productActions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ShopPage() {
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.product); // Tüm product state'ini çek
+
+  useEffect(() => {
+    dispatch(fetchProducts()); // fetchProducts işlevini çağırın
+  }, [dispatch]);
+
+  const { productList = [], fetchState } = productState || {};
+
+  useEffect(() => {
+    if (fetchState === "FETCHING") {
+      toast.info("Loading products..."); // Yükleniyor Toast mesajı
+    }
+    if (fetchState === "ERROR") {
+      toast.error("Error fetching products. Please try again later."); // Hata Toast mesajı
+    }
+  }, [fetchState]);
+
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        pauseOnFocusLoss
+      />
       <div className="pt-32 sm:px-10 px-40">
         <div>
           <div className="py-3 flex justify-between sm:flex-col">
@@ -102,13 +89,14 @@ function ShopPage() {
           </section>
         </div>
         <div className="grid grid-cols-4 gap-4 sm:flex sm:flex-col">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {productList.length > 0 ? (
+            productList.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            <div className="text-center py-10">No products available</div>
+          )}
         </div>
-        <section className="flex items-center justify-center py-5">
-          <PaginationShop />
-        </section>
       </div>
       <div className="w-full bg-zinc-100">
         <Clients />

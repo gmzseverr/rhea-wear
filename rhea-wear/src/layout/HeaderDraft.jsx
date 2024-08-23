@@ -105,7 +105,7 @@ function HeaderDraft() {
           </NavLink>
           <p className="sm:hidden flex items-center gap-1">/</p>
           <NavLink
-            to="/signup"
+            to="/register"
             className="sm:hidden flex items-center gap-1"
             activeClassName="active-link"
           >
