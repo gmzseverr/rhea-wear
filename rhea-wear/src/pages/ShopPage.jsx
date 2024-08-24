@@ -1,34 +1,15 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ProductCard from "../components/ProductCard";
+import React from "react";
+
 import ShopImageSection from "../components/ShopImageSection";
 import DropDownSort from "../components/DropDownSort";
 import Clients from "../components/Clients";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGrip, faListUl } from "@fortawesome/free-solid-svg-icons";
-import { fetchProducts } from "../redux/actions/productActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProductList from "../components/ProductList";
 
 function ShopPage() {
-  const dispatch = useDispatch();
-  const productState = useSelector((state) => state.product); // Tüm product state'ini çek
-
-  useEffect(() => {
-    dispatch(fetchProducts()); // fetchProducts işlevini çağırın
-  }, [dispatch]);
-
-  const { productList = [], fetchState } = productState || {};
-
-  useEffect(() => {
-    if (fetchState === "FETCHING") {
-      toast.info("Loading products..."); // Yükleniyor Toast mesajı
-    }
-    if (fetchState === "ERROR") {
-      toast.error("Error fetching products. Please try again later."); // Hata Toast mesajı
-    }
-  }, [fetchState]);
-
   return (
     <div>
       <ToastContainer
@@ -88,15 +69,7 @@ function ShopPage() {
             </div>
           </section>
         </div>
-        <div className="grid grid-cols-4 gap-4 sm:flex sm:flex-col">
-          {productList.length > 0 ? (
-            productList.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))
-          ) : (
-            <div className="text-center py-10">No products available</div>
-          )}
-        </div>
+        <ProductList />
       </div>
       <div className="w-full bg-zinc-100">
         <Clients />

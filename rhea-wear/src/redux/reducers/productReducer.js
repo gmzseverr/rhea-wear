@@ -26,6 +26,8 @@ export const productReducer = (state = initialProductState, action) => {
       return { ...state, offset: action.payload };
     case "SET_FILTER":
       return { ...state, filter: action.payload };
+    case "SET_BESTSELLERS":
+      return { ...state, bestsellers: action.payload };
     default:
       return state;
   }

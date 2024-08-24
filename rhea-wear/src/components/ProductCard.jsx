@@ -3,12 +3,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
+  const imageUrl =
+    product.images && product.images[0] ? product.images[0].url : "";
   return (
     <div className="flex justify-center">
       <section className="w-[239px] h-[615px] flex flex-col items-center">
         <Link to={`/product/${product.id}`}>
           <img
-            src={product.image}
+            src={imageUrl}
             className="h-[427px] object-cover"
             alt={product.name}
           />
@@ -23,8 +25,7 @@ function ProductCard({ product }) {
             {product.category}
           </p>
           <div className="flex flex-row font-bold text-base">
-            <p className="pr-2 text-[#BDBDBD]">{product.price}</p>
-            <p className="text-[#23856D]">{product.discountedPrice}</p>
+            <p className="pr-2 text-[#BDBDBD]">${product.price}</p>
           </div>
           {/* <div className="flex pt-2">
             {product.colors.map((color, index) => (
