@@ -39,7 +39,7 @@ function Header() {
   };
 
   return (
-    <div className="px-52 sm:px-10 my-7">
+    <div className="px-52 sm:px-10 my-7 " id="top">
       <div className="flex justify-between items-center sm:justify-around">
         <Link to="/" className="text-[#252B42] font-extrabold text-2xl">
           rhea.
@@ -99,7 +99,7 @@ function Header() {
               Shop
             </NavLink>
             {shopDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-lg rounded-md">
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-lg rounded-md z-40">
                 <CategoryList />
               </div>
             )}

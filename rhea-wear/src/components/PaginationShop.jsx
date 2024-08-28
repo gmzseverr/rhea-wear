@@ -1,61 +1,93 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-
 import React from "react";
+import { scroller } from "react-scroll";
 
-function PaginationShop() {
+const PaginationShop = ({ currentPage, totalPages, onPageChange }) => {
+  const handleClick = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      onPageChange(pageNumber);
+      scroller.scrollTo("top", {
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+      });
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center flex-col  border-gray-200 bg-white sm:px-4 py-3 px-6 h-24">
-      <div className="flex flex-1 items-center justify-center">
-        <nav
-          aria-label="Pagination"
-          className="isolate inline-flex -space-x-px rounded-md shadow-sm w-80"
+    <div className="flex justify-center mt-4 space-x-0 font-semibold">
+      <button
+        onClick={() => handleClick(1)}
+        disabled={currentPage <= 1}
+        className="py-4 px-4 border border-gray-300 bg-white text-[#23A6F0] hover:bg-gray-100 disabled:opacity-50 rounded-l-lg disabled:text-gray-400 "
+      >
+        First
+      </button>
+      {currentPage > 3 && (
+        <button
+          onClick={() => handleClick(currentPage - 2)}
+          className={`py-2 px-4 border border-gray-300 ${
+            currentPage === currentPage - 2
+              ? "bg-[#23A6F0] text-white"
+              : "bg-white text-[#23A6F0] hover:bg-gray-100"
+          } rounded-none`}
         >
-          <a
-            href="#"
-            className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-          >
-            <span className="sr-only">Previous</span>
-            <ChevronLeftIcon aria-hidden="true" className="h-5 w-5" />
-          </a>
-          <a
-            href="#"
-            aria-current="page"
-            className="relative z-10 inline-flex items-center bg-[#23A6F0] px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#23A6F0]"
-          >
-            1
-          </a>
-          <a
-            href="#"
-            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-          >
-            2
-          </a>
-          <a
-            href="#"
-            className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 "
-          >
-            3
-          </a>
-          <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-            ...
-          </span>
-
-          <a
-            href="#"
-            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-          >
-            9
-          </a>
-          <a
-            href="#"
-            className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-          >
-            <ChevronRightIcon aria-hidden="true" className="h-5 w-5" />
-          </a>
-        </nav>
-      </div>
+          {currentPage - 2}
+        </button>
+      )}
+      {currentPage > 2 && (
+        <button
+          onClick={() => handleClick(currentPage - 1)}
+          className={`py-2 px-4 border border-gray-300 ${
+            currentPage === currentPage - 1
+              ? "bg-[#23A6F0] text-white"
+              : "bg-white text-[#23A6F0] hover:bg-gray-100"
+          } rounded-none`}
+        >
+          {currentPage - 1}
+        </button>
+      )}
+      <button
+        className={`py-2 px-4 border border-gray-300 ${
+          currentPage === currentPage
+            ? "bg-[#23A6F0] text-white"
+            : "bg-white text-[#23A6F0] hover:bg-gray-100"
+        } rounded-none`}
+      >
+        {currentPage}
+      </button>
+      {currentPage < totalPages && (
+        <button
+          onClick={() => handleClick(currentPage + 1)}
+          className={`py-2 px-4 border border-gray-300 ${
+            currentPage === currentPage + 1
+              ? "bg-[#23A6F0] text-white"
+              : "bg-white text-[#23A6F0] hover:bg-gray-100"
+          } rounded-none`}
+        >
+          {currentPage + 1}
+        </button>
+      )}
+      {currentPage < totalPages - 1 && (
+        <button
+          onClick={() => handleClick(currentPage + 2)}
+          className={`py-2 px-4 border border-gray-300 ${
+            currentPage === currentPage + 2
+              ? "bg-[#23A6F0] text-white"
+              : "bg-white text-[#23A6F0] hover:bg-gray-100"
+          } rounded-none`}
+        >
+          {currentPage + 2}
+        </button>
+      )}
+      <button
+        onClick={() => handleClick(currentPage + 1)}
+        disabled={currentPage >= totalPages}
+        className="py-2 px-4 border border-gray-300 bg-white text-[#23A6F0] hover:bg-gray-100 disabled:opacity-50 rounded-r-lg "
+      >
+        Next
+      </button>
     </div>
   );
-}
+};
 
 export default PaginationShop;

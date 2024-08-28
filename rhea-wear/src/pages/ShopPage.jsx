@@ -1,15 +1,19 @@
 import React from "react";
 
 import ShopImageSection from "../components/ShopImageSection";
-import DropDownSort from "../components/DropDownSort";
+
 import Clients from "../components/Clients";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGrip, faListUl } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductList from "../components/ProductList";
+import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 
 function ShopPage() {
+  const totalProducts = useSelector((state) => state.product.total);
+
   return (
     <div>
       <ToastContainer
@@ -42,7 +46,7 @@ function ShopPage() {
           <section className="flex justify-between items-center py-5 sm:flex sm:flex-col sm:gap-4">
             <div>
               <p className="text-sm text-gray-500 font-bold">
-                Showing all results
+                Showing all {totalProducts} results
               </p>
             </div>
 
@@ -61,16 +65,15 @@ function ShopPage() {
                 />
               </div>
             </div>
-            <div className="flex justify-end gap-2">
-              <DropDownSort />
-              <button className="inline-flex justify-center gap-x-1.5 rounded-md bg-[#23A6F0] px-3 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-sky-300">
-                Filter
-              </button>
-            </div>
+            <div className="flex justify-end gap-2"></div>
           </section>
         </div>
-        <ProductList />
+        <Routes>
+          <Route path="/" element={<ProductList />} />
+          <Route path=":gender/:code/:categoryId" element={<ProductList />} />
+        </Routes>
       </div>
+      <div></div>
       <div className="w-full bg-zinc-100">
         <Clients />
       </div>

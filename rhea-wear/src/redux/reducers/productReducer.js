@@ -1,13 +1,14 @@
-// src/redux/reducers/productReducer.js
-
 const initialProductState = {
   categories: [],
   productList: [],
   total: 0,
-  limit: 25,
+  sortOption: "",
+  limit: 25, // Default limit
   offset: 0,
+  currentPage: 1,
   filter: "",
   fetchState: "NOT_FETCHED", // "FETCHING", "FETCHED", "ERROR"
+  bestsellers: [], // Ensure bestsellers are initialized
 };
 
 export const productReducer = (state = initialProductState, action) => {
@@ -28,6 +29,14 @@ export const productReducer = (state = initialProductState, action) => {
       return { ...state, filter: action.payload };
     case "SET_BESTSELLERS":
       return { ...state, bestsellers: action.payload };
+    case "SET_CURRENT_PAGE":
+      return {
+        ...state,
+        currentPage: action.payload,
+        offset: (action.payload - 1) * state.limit,
+      };
+    case "SET_SORT_OPTION":
+      return { ...state, sortOption: action.payload };
     default:
       return state;
   }
