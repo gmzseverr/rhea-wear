@@ -9,12 +9,14 @@ const initialProductState = {
   filter: "",
   fetchState: "NOT_FETCHED", // "FETCHING", "FETCHED", "ERROR"
   bestsellers: [], // Ensure bestsellers are initialized
+  productDetail: null,
 };
 
 export const productReducer = (state = initialProductState, action) => {
   switch (action.type) {
     case "SET_CATEGORIES":
       return { ...state, categories: action.payload };
+
     case "SET_PRODUCT_LIST":
       return { ...state, productList: action.payload };
     case "SET_TOTAL":
@@ -37,6 +39,8 @@ export const productReducer = (state = initialProductState, action) => {
       };
     case "SET_SORT_OPTION":
       return { ...state, sortOption: action.payload };
+    case "SET_PRODUCT_DETAIL":
+      return { ...state, productDetail: action.payload };
     default:
       return state;
   }

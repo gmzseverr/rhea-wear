@@ -11,6 +11,7 @@ const SET_FILTER = "SET_FILTER";
 const SET_BESTSELLERS = "SET_BESTSELLERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_SORT_OPTION = "SET_SORT_OPTION";
+const SET_PRODUCT_DETAIL = "SET_PRODUCT_DETAIL";
 
 // Action Creators
 export const setCategories = (categories) => ({
@@ -62,30 +63,10 @@ export const setSortOption = (sortOption) => ({
   type: SET_SORT_OPTION,
   payload: sortOption,
 });
-
-export const fetchProductById = (productId) => async (dispatch) => {
-  if (!productId) {
-    console.error("Product ID is missing");
-    return;
-  }
-
-  dispatch(setFetchState("FETCHING"));
-
-  const url = `https://workintech-fe-ecommerce.onrender.com/products/${productId}`;
-  console.log("Fetching product from URL:", url);
-
-  try {
-    const response = await axios.get(url);
-    dispatch({
-      type: "SET_PRODUCT_DETAIL",
-      payload: response.data,
-    });
-    dispatch(setFetchState("FETCHED"));
-  } catch (error) {
-    console.error("Failed to fetch product:", error);
-    dispatch(setFetchState("ERROR"));
-  }
-};
+export const setProductDetail = (productDetail) => ({
+  type: SET_PRODUCT_DETAIL,
+  payload: productDetail,
+});
 
 export const fetchProducts =
   (
@@ -130,5 +111,29 @@ export const fetchCategories = () => async (dispatch) => {
   } catch (error) {
     console.error("Failed to fetch categories:", error);
     // You might also want to dispatch an action to show an error message to the user.
+  }
+};
+export const fetchProductById = (productId) => async (dispatch, getState) => {
+  const state = getState();
+  const { productList } = state.product;
+
+  let productDetail = null;
+
+  for (let i = 0; i < productList.length; i++) {
+    if (productList[i].id === productId) {
+      productDetail = productList[i];
+      break;
+    }
+  }
+
+  if (productDetail) {
+    dispatch({
+      type: "SET_PRODUCT_DETAIL",
+      payload: productDetail,
+    });
+    dispatch(setFetchState("FETCHED"));
+  } else {
+    console.warn(`Product with ID ${productId} not found in productList`);
+    dispatch(setFetchState("ERROR"));
   }
 };
