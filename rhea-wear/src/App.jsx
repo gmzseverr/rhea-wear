@@ -21,6 +21,7 @@ import LoginPage from "./pages/LoginPage";
 import { setUser, clearUser } from "./redux/actions/clientActions";
 import store from "./redux/store/store";
 import HeaderDraft from "./layout/HeaderDraft";
+import ShoppingCart from "./pages/ShoppingCart";
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -52,6 +53,7 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer />
       <Header />
 
       <Routes>
@@ -64,6 +66,7 @@ const App = () => {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/register" element={<SignUpForm />} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
+        <Route path="/cart" element={<ShoppingCart />} />
       </Routes>
       <Footer />
     </>

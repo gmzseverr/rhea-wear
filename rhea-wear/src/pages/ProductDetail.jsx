@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { fetchProductById } from "../redux/actions/productActions";
+import { addToCart } from "../redux/actions/shoppingCartActions";
 import { Spinner } from "react-bootstrap";
 import Star from "../components/Star";
 import {
@@ -13,9 +15,11 @@ import {
   faCaretLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-toastify";
 
 function ProductDetail() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { productId } = useParams();
   const productDetail = useSelector((state) => state.product.productDetail);
   const fetchState = useSelector((state) => state.product.fetchState);
@@ -61,6 +65,17 @@ function ProductDetail() {
 
   const currentImageUrl =
     images && images[currentImageIndex] ? images[currentImageIndex].url : "";
+
+  const handleAddToCart = () => {
+    const quantity = 1;
+    console.log("Adding to cart:", {
+      id: productDetail.id,
+      name: productDetail.name,
+      quantity: quantity,
+    });
+    dispatch(addToCart(productDetail, quantity));
+    toast.success("Product added to cart!");
+  };
 
   return (
     <div className="pt-0 sm:px-10 px-40">
@@ -137,20 +152,23 @@ function ProductDetail() {
           <p className="border-t-2 pb-2 text-gray-300"> </p>
 
           <div className="py-5 flex gap-2 sm:flex-col sm:place-items-center">
-            <button className="w-36 justify-center rounded-md bg-[#23A6F0] px-3 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-sky-300">
-              Select Options
+            <button
+              onClick={handleAddToCart}
+              className="w-36 justify-center rounded-md bg-[#23A6F0] px-3 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-sky-300"
+            >
+              Add To Cart
             </button>
             <section className="flex gap-2">
-              <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200">
+              <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200 cursor-pointer">
                 <FontAwesomeIcon
                   icon={faHeart}
                   className="hover:text-red-700"
                 />
               </div>
-              <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-400">
-                <FontAwesomeIcon icon={faCartShopping} className="" />
+              <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-400 cursor-pointer">
+                <FontAwesomeIcon icon={faCartShopping} />
               </div>
-              <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-400">
+              <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-400 cursor-pointer">
                 <FontAwesomeIcon icon={faEye} />
               </div>
             </section>

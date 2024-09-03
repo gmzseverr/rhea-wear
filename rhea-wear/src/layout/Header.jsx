@@ -11,12 +11,22 @@ import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import gravatarUrl from "gravatar-url";
 import CategoryList from "../components/CategoryList";
+import CartDropDown from "../components/CartDropDown"; // Ensure CartDropdown is imported
 
 function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [homeDropdownOpen, setHomeDropdownOpen] = useState(false);
   const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Initialize this state
+
   const user = useSelector((state) => state.client.user);
+
+  const cartItemCount = useSelector((state) =>
+    (state.shoppingCart.cartItems || []).reduce(
+      (total, item) => total + item.quantity,
+      0
+    )
+  );
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -38,8 +48,12 @@ function Header() {
     setShopDropdownOpen(false);
   };
 
+  const handleCartClick = () => {
+    setIsDropdownOpen((prevState) => !prevState);
+  };
+
   return (
-    <div className="px-52 sm:px-10 my-7 " id="top">
+    <div className="px-52 sm:px-10 my-7" id="top">
       <div className="flex justify-between items-center sm:justify-around">
         <Link to="/" className="text-[#252B42] font-extrabold text-2xl">
           rhea.
@@ -61,7 +75,7 @@ function Header() {
               <div className="absolute top-full font-bold left-0 mt-2 w-48 bg-white shadow-lg rounded-md hover:text-[#23A6F0]">
                 <NavLink
                   to="/home"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Home
                 </NavLink>
@@ -169,16 +183,34 @@ function Header() {
               </NavLink>
             </>
           )}
-          <a href="/" className="flex items-center">
+          <a href="/" className="flex items-center relative">
             <FontAwesomeIcon icon={faSearch} />
           </a>
-          <a href="#" className="flex items-center">
-            <FontAwesomeIcon icon={faCartShopping} />
-          </a>
+          <div className="relative">
+            <button
+              onClick={handleCartClick}
+              className="flex items-center relative"
+            >
+              <FontAwesomeIcon
+                icon={faCartShopping}
+                className="text-xl cursor-pointer"
+              />
+              {cartItemCount > 0 && (
+                <span
+                  className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+                  style={{ transform: "translate(50%, -50%)" }}
+                >
+                  {cartItemCount}
+                </span>
+              )}
+            </button>
+            {isDropdownOpen && <CartDropDown />}
+          </div>
+
           <a href="#" className="sm:hidden flex items-center">
             <FontAwesomeIcon icon={faHeart} />
           </a>
-          <button onClick={toggleNav} className="hidden items-center">
+          <button onClick={toggleNav} className="hidden sm:flex items-center">
             <FontAwesomeIcon icon={faBars} />
           </button>
         </div>
