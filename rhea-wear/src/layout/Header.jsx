@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import gravatarUrl from "gravatar-url";
 import CategoryList from "../components/CategoryList";
 import CartDropDown from "../components/CartDropDown"; // Ensure CartDropdown is imported
+import CartIcon from "../components/CartIcon";
 
 function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -191,10 +192,7 @@ function Header() {
               onClick={handleCartClick}
               className="flex items-center relative"
             >
-              <FontAwesomeIcon
-                icon={faCartShopping}
-                className="text-xl cursor-pointer"
-              />
+              <CartIcon />
               {cartItemCount > 0 && (
                 <span
                   className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"

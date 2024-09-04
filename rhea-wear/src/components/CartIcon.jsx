@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import CartDropDown from "./CartDropDown"; // Adjust the path as necessary
+import CartDropDown from "./CartDropDown";
 
 function CartIcon() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.shoppingCart.cart);
+  const cartItemCount = cartItems.reduce(
+    (total, item) => total + item.count,
+    0
+  );
 
   const handleCartClick = () => {
     setIsDropdownVisible((prev) => !prev);
@@ -14,14 +18,17 @@ function CartIcon() {
 
   return (
     <div className="relative">
-      <button onClick={handleCartClick} className="relative">
+      <button onClick={handleCartClick} className="relative flex items-center">
         <FontAwesomeIcon
           icon={faCartShopping}
-          className="w-8 h-8 text-gray-500"
+          className="sm:text-[#252B42] text-[#23A6F0] font-bold text-sm"
         />
-        {cartItems.length > 0 && (
-          <span className="absolute top-0 right-0 block w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full flex items-center justify-center">
-            {cartItems.length}
+        {cartItemCount > 0 && (
+          <span
+            className="absolute top-0 right-0 block w-3 h-3 text-xs text-white bg-red-600 rounded-full flex items-center justify-center"
+            style={{ transform: "translate(50%, -50%)" }}
+          >
+            {cartItemCount}
           </span>
         )}
       </button>

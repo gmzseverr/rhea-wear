@@ -53,7 +53,7 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
       <Header />
 
       <Routes>
@@ -78,7 +78,6 @@ function AppWrapper() {
     <Provider store={store}>
       <Router>
         <App />
-        <ToastContainer position="bottom-right" />
       </Router>
     </Provider>
   );

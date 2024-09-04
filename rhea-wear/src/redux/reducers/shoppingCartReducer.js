@@ -1,3 +1,13 @@
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_CART_ITEM,
+} from "../actions/shoppingCartActions";
+
+const initialState = {
+  cart: [],
+};
+
 const shoppingCartReducer = (state = initialState, action) => {
   console.log("Reducer action:", action);
 
@@ -62,3 +72,5 @@ const shoppingCartReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default shoppingCartReducer;

@@ -16,14 +16,12 @@ export const addToCart = (product, quantity) => (dispatch, getState) => {
 
   if (existingProductIndex !== -1) {
     // Ürün sepette varsa, miktarı güncelle
-    const updatedCart = cart.map((item, index) =>
-      index === existingProductIndex
-        ? { ...item, count: item.count + quantity }
-        : item
-    );
     dispatch({
-      type: "UPDATE_CART_ITEM",
-      payload: updatedCart,
+      type: UPDATE_CART_ITEM,
+      payload: {
+        productId: product.id,
+        count: cart[existingProductIndex].count + quantity,
+      },
     });
   } else {
     // Ürün sepette değilse, yeni bir ürün ekle
@@ -33,7 +31,7 @@ export const addToCart = (product, quantity) => (dispatch, getState) => {
       product,
     };
     dispatch({
-      type: "ADD_TO_CART",
+      type: ADD_TO_CART,
       payload: newCartItem,
     });
   }
