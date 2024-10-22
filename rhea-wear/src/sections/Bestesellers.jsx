@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import ProductCard from "../components/ProductCard";
+import { API } from "../api/api";
 
 function Bestsellers() {
   const [bestsellers, setBestsellers] = useState([]);
@@ -11,9 +12,7 @@ function Bestsellers() {
       setFetchState("FETCHING");
 
       try {
-        const response = await axios.get(
-          "https://workintech-fe-ecommerce.onrender.com/products"
-        );
+        const response = await API.get("/products");
 
         const sortedProducts = response.data.products.sort(
           (a, b) => b.sell_count - a.sell_count

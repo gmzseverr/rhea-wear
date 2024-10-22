@@ -1,4 +1,4 @@
-import axios from "axios";
+import { API } from "../../api/api";
 
 // Action Types
 const SET_CATEGORIES = "SET_CATEGORIES";
@@ -104,7 +104,7 @@ export const fetchProducts =
 
 export const fetchCategories = () => async (dispatch) => {
   try {
-    const response = await axios.get(
+    const response = await API.get(
       "https://workintech-fe-ecommerce.onrender.com/categories"
     );
     dispatch(setCategories(response.data));

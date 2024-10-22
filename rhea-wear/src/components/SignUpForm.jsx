@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axiosApi.js";
+import { API } from "../api/api";
 
 const SignUpForm = () => {
   const {
@@ -18,7 +18,7 @@ const SignUpForm = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await api.get(
+        const response = await API.get(
           "https://workintech-fe-ecommerce.onrender.com/roles"
         );
         setRoles(response.data);

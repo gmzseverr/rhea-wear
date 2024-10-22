@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faCartShopping,
+  faPowerOff,
   faSearch,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import gravatarUrl from "gravatar-url";
 import CategoryList from "../components/CategoryList";
-import CartDropDown from "../components/CartDropDown"; // Ensure CartDropdown is imported
+import CartDropDown from "../components/CartDropDown";
 import CartIcon from "../components/CartIcon";
+import { setUser } from "../redux/actions/clientActions";
 
 function Header() {
+  const dispatch = useDispatch();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [homeDropdownOpen, setHomeDropdownOpen] = useState(false);
   const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Initialize this state
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user, isAuthenticated } = useSelector((state) => state.client);
 
-  const user = useSelector((state) => state.client.user);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    dispatch({ type: "LOGOUT" });
+  };
 
   const cartItemCount = useSelector((state) =>
     (state.shoppingCart.cartItems || []).reduce(
@@ -52,7 +60,6 @@ function Header() {
   const handleCartClick = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
-
   return (
     <div className="px-52 sm:px-10 my-7" id="top">
       <div className="flex justify-between items-center sm:justify-around">
@@ -68,7 +75,11 @@ function Header() {
           >
             <NavLink
               to="/"
-              className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+              className={({ isActive }) =>
+                `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                  isActive ? "active-link" : ""
+                }`
+              }
             >
               Home
             </NavLink>
@@ -109,7 +120,11 @@ function Header() {
           >
             <NavLink
               to="/shop"
-              className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+              className={({ isActive }) =>
+                `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                  isActive ? "active-link" : ""
+                }`
+              }
             >
               Shop
             </NavLink>
@@ -124,7 +139,11 @@ function Header() {
           <section>
             <NavLink
               to="/about"
-              className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+              className={({ isActive }) =>
+                `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                  isActive ? "active-link" : ""
+                }`
+              }
             >
               About
             </NavLink>
@@ -132,7 +151,11 @@ function Header() {
           <section>
             <NavLink
               to="/blog"
-              className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+              className={({ isActive }) =>
+                `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                  isActive ? "active-link" : ""
+                }`
+              }
             >
               Blog
             </NavLink>
@@ -140,7 +163,11 @@ function Header() {
           <section>
             <NavLink
               to="/contact"
-              className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+              className={({ isActive }) =>
+                `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                  isActive ? "active-link" : ""
+                }`
+              }
             >
               Contact
             </NavLink>
@@ -148,7 +175,11 @@ function Header() {
           <section>
             <NavLink
               to="/pages"
-              className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+              className={({ isActive }) =>
+                `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                  isActive ? "active-link" : ""
+                }`
+              }
             >
               Pages
             </NavLink>
@@ -156,34 +187,37 @@ function Header() {
         </nav>
 
         <div className="flex items-center space-x-4 sm:text-[#252B42] text-[#23A6F0] font-bold text-sm">
-          <FontAwesomeIcon icon={faUser} />
           {user && user.email ? (
             <div className="flex items-center space-x-2">
               <img
-                src={gravatarUrl(user.email, { size: 40 })}
+                src={gravatarUrl(user.email, { size: 20 })}
                 alt="User Avatar"
                 className="rounded-full"
               />
               <span>{user.name}</span>
+
+              <button onClick={handleLogout} className="font-bold text-red-600">
+                <FontAwesomeIcon icon={faPowerOff} />
+              </button>
             </div>
           ) : (
             <>
+              <FontAwesomeIcon icon={faUser} />
               <NavLink
                 to="/login"
                 className="sm:hidden flex items-center gap-1"
-                activeClassName="active-link"
               >
                 <p>Login</p>
               </NavLink>
               <NavLink
                 to="/register"
                 className="sm:hidden flex items-center gap-1"
-                activeClassName="active-link"
               >
                 <p>Register</p>
               </NavLink>
             </>
           )}
+
           <a href="/" className="flex items-center relative">
             <FontAwesomeIcon icon={faSearch} />
           </a>
@@ -219,37 +253,61 @@ function Header() {
         <nav className="flex flex-col space-y-4 items-center">
           <NavLink
             to="/"
-            className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+            className={({ isActive }) =>
+              `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                isActive ? "active-link" : ""
+              }`
+            }
           >
             Home
           </NavLink>
           <NavLink
             to="/shop"
-            className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+            className={({ isActive }) =>
+              `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                isActive ? "active-link" : ""
+              }`
+            }
           >
             Shop
           </NavLink>
           <NavLink
             to="/about"
-            className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+            className={({ isActive }) =>
+              `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                isActive ? "active-link" : ""
+              }`
+            }
           >
             About
           </NavLink>
           <NavLink
             to="/blog"
-            className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+            className={({ isActive }) =>
+              `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                isActive ? "active-link" : ""
+              }`
+            }
           >
             Blog
           </NavLink>
           <NavLink
             to="/contact"
-            className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+            className={({ isActive }) =>
+              `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                isActive ? "active-link" : ""
+              }`
+            }
           >
             Contact
           </NavLink>
           <NavLink
             to="/pages"
-            className="text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium"
+            className={({ isActive }) =>
+              `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
+                isActive ? "active-link" : ""
+              }`
+            }
           >
             Pages
           </NavLink>

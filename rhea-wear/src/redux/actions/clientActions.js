@@ -1,47 +1,46 @@
-import axios from "axios";
-import gravatarUrl from "gravatar-url";
 import { toast } from "react-toastify";
 
-export const loginUser = (credentials, navigate) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(
-        "https://workintech-fe-ecommerce.onrender.com/login",
-        {
-          email: credentials.userName,
-          password: credentials.password,
-        }
-      );
-      const loginData = response.data;
+import gravatarUrl from "gravatar-url";
+import { API } from "../../api/api";
 
-      // Gravatar URL oluşturma
-      const avatarUrl = gravatarUrl(credentials.userName, {
-        size: "100",
-        default: "retro",
-      });
+export const SET_USER = "SET_USER";
+export const CLEAR_USER = "CLEAR_USER";
+export const SET_ROLES = "SET_ROLES";
+export const SET_THEME = "SET_THEME";
+export const SET_LANGUAGE = "SET_LANGUAGE";
 
-      // Kullanıcı bilgilerini güncelle
-      const userWithAvatar = { ...loginData, avatarUrl };
+export const setLogin = () => ({ type: "SET_LOGIN" });
+export const setLogout = () => ({ type: "SET_LOGOUT" });
 
-      dispatch({ type: "SET_USER", payload: userWithAvatar });
+//USER//
+export const setUser = (dispatch, userData) => {
+  dispatch({
+    type: "SET_USER",
+    payload: {
+      name: userData.name || userData.email,
+      email: userData.email,
+      avatarUrl:
+        userData.avatarUrl ||
+        gravatarUrl(userData.email, {
+          size: "50",
+          default: "retro",
+        }),
+    },
+  });
+};
 
-      // Token'ı localStorage veya sessionStorage'a kaydet
-      if (credentials.remember) {
-        localStorage.setItem("token", loginData.token);
-        localStorage.setItem("userName", credentials.userName); // kullanıcı adını da kaydediyoruz
-      } else {
-        sessionStorage.setItem("token", loginData.token);
-        sessionStorage.setItem("userName", credentials.userName); // kullanıcı adını da kaydediyoruz
-      }
+export const clearUser = () => ({
+  type: "CLEAR_USER",
+});
 
-      toast.success("Successfully logged in!");
-      navigate("/");
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message ||
-        "Login failed. Please check your credentials.";
-      toast.error(errorMessage);
-    }
+export const logoutUser = () => {
+  return (dispatch) => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    dispatch({ type: "LOGOUT" });
+
+    toast.success("Successfully logged out!");
   };
 };
 
@@ -54,24 +53,13 @@ export const fetchRoles = () => {
     }
 
     try {
-      const response = await axios.get(
-        "https://workintech-fe-ecommerce.onrender.com/roles"
-      );
+      const response = await API.get("/roles");
       dispatch(setRoles(response.data));
     } catch (error) {
       console.error("Failed to fetch roles:", error);
     }
   };
 };
-
-export const setUser = (user) => ({
-  type: "SET_USER",
-  payload: user,
-});
-
-export const clearUser = () => ({
-  type: "CLEAR_USER",
-});
 
 export const setRoles = (roles) => ({
   type: "SET_ROLES",

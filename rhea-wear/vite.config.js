@@ -1,7 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      "/user": {
+        target: "https://workintech-fe-ecommerce.onrender.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/user/, "/user"),
+      },
+    },
+  },
   plugins: [react()],
-})
+});

@@ -36,7 +36,10 @@ function CartDropDown() {
         </ul>
       )}
       <div className="py-4 px-2 text-right border-t flex justify-around ">
-        <button className="justify-center rounded-md bg-[#23A6F0] px-3 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-sky-300">
+        <button
+          onClick={() => navigate("/order")}
+          className="justify-center rounded-md bg-[#23A6F0] px-3 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-sky-300"
+        >
           Buy
         </button>
         <button

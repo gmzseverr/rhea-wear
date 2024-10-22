@@ -1,11 +1,23 @@
 import {
+  SET_ADDRESS,
+  DELETE_ADDRESS,
   ADD_TO_CART,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM,
+  UPDATE_ADDRESS,
+  SET_PAYMENT,
+  ADD_PAYMENT,
+  DELETE_PAYMENT,
+  UPDATE_PAYMENT,
 } from "../actions/shoppingCartActions";
 
 const initialState = {
   cart: [],
+  addresses: [],
+
+  paymentData: [],
+  loading: false,
+  error: null,
 };
 
 const shoppingCartReducer = (state = initialState, action) => {
@@ -13,7 +25,7 @@ const shoppingCartReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case ADD_TO_CART:
-      const { product, count: addCount } = action.payload; // Değişkeni yeniden adlandır
+      const { product, count: addCount } = action.payload;
       const existingProductIndex = state.cart.findIndex(
         (item) => item.product.id === product.id
       );
@@ -66,6 +78,55 @@ const shoppingCartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: filteredCart,
+      };
+
+    //ADRESS
+    case SET_ADDRESS:
+      return {
+        ...state,
+        addresses: action.payload,
+      };
+    case DELETE_ADDRESS:
+      return {
+        ...state,
+        addresses: state.addresses.filter(
+          (address) => address.id !== action.payload
+        ),
+      };
+    case UPDATE_ADDRESS:
+      return {
+        ...state,
+        addresses: state.addresses.map((address) =>
+          address.id === action.payload.id ? action.payload : address
+        ),
+      };
+
+    //PAYMENT
+    case SET_PAYMENT:
+      return {
+        ...state,
+        paymentData: action.payload,
+      };
+
+    case ADD_PAYMENT:
+      return {
+        ...state,
+        paymentData: [...state.paymentData, action.payload],
+      };
+
+    case DELETE_PAYMENT:
+      return {
+        ...state,
+        paymentData: state.paymentData.filter(
+          (payment) => payment.id !== action.payload
+        ),
+      };
+    case UPDATE_PAYMENT:
+      return {
+        ...state,
+        paymentData: state.paymentData.map((payment) =>
+          payment.id === action.payload.id ? action.payload : payment
+        ),
       };
 
     default:

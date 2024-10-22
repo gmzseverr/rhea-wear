@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import axios from "axios";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,19 +16,21 @@ import ContactPage from "./pages/ContactPage";
 import TeamPage from "./pages/TeamPage";
 import AboutUsPage from "./pages/AboutUsPage";
 import SignUpForm from "./components/SignUpForm";
+
+import store from "./redux/store/store";
+import ShoppingCart from "./pages/ShoppingCart";
+import OrderPage from "./pages/OrderPage";
+import ProtectedRoute from "./services/ProtectedRoute";
+
 import LoginPage from "./pages/LoginPage";
 
-import { setUser, clearUser } from "./redux/actions/clientActions";
-import store from "./redux/store/store";
-import HeaderDraft from "./layout/HeaderDraft";
-import ShoppingCart from "./pages/ShoppingCart";
+import axios from "axios";
+import { setUser } from "./redux/actions/clientActions";
 
 const App = () => {
-  const [user, setUser] = useState("");
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const checkUserAutoLogin = () => {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     const userName =
@@ -37,18 +39,31 @@ const App = () => {
     if (token) {
       axios
         .get("https://workintech-fe-ecommerce.onrender.com/verify", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: token,
+          },
         })
-        .then((response) => {
-          dispatch(setUser({ ...response.data, userName }));
+        .then((res) => {
+          console.log("autologin oldu", res.data);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("userName", userName);
+
+          setUser(dispatch, {
+            name: userName,
+            email: res.data.email,
+            avatarUrl: res.data.avatarUrl,
+          });
         })
         .catch((error) => {
-          console.error("Error verifying token:", error);
+          console.error("Error during auto-login:", error);
+
           localStorage.removeItem("token");
-          sessionStorage.removeItem("token");
-          dispatch(clearUser());
+          localStorage.removeItem("userName");
         });
     }
+  };
+  useEffect(() => {
+    checkUserAutoLogin();
   }, [dispatch]);
 
   return (
@@ -57,16 +72,19 @@ const App = () => {
       <Header />
 
       <Routes>
-        <Route path="/" element={<HomePage user={user} />} />
-        <Route path="/shop" element={<ShopPage />} />
-
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop/*" element={<ShopPage />} />
         <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/register" element={<SignUpForm />} />
-        <Route path="/login" element={<LoginPage setUser={setUser} />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<ShoppingCart />} />
+        <Route
+          path="/order"
+          element={<ProtectedRoute element={<OrderPage />} />}
+        />
       </Routes>
       <Footer />
     </>

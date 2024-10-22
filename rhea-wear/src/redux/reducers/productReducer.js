@@ -7,8 +7,8 @@ const initialProductState = {
   offset: 0,
   currentPage: 1,
   filter: "",
-  fetchState: "NOT_FETCHED", // "FETCHING", "FETCHED", "ERROR"
-  bestsellers: [], // Ensure bestsellers are initialized
+  fetchState: "NOT_FETCHED",
+  bestsellers: [],
   productDetail: null,
 };
 

@@ -38,7 +38,7 @@ function ProductList() {
   const categories = useSelector((state) => state.product.categories);
   useParams;
   useEffect(() => {
-    dispatch(fetchCategories()); // Fetch categories if not already done
+    dispatch(fetchCategories());
     dispatch(
       fetchProducts(
         limit,

@@ -1,6 +1,12 @@
-export const SET_CART = "SET_CART";
 export const SET_PAYMENT = "SET_PAYMENT";
+export const ADD_PAYMENT = "ADD_PAYMENT";
+export const DELETE_PAYMENT = "DELETE_PAYMENT";
+export const UPDATE_PAYMENT = "UPDATE_PAYMENT";
+
 export const SET_ADDRESS = "SET_ADDRESS";
+export const DELETE_ADDRESS = "DELETE_ADDRESS";
+export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
+
 export const ADD_TO_CART = "ADD_TO_CART";
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
@@ -15,7 +21,6 @@ export const addToCart = (product, quantity) => (dispatch, getState) => {
   );
 
   if (existingProductIndex !== -1) {
-    // Ürün sepette varsa, miktarı güncelle
     dispatch({
       type: UPDATE_CART_ITEM,
       payload: {
@@ -24,7 +29,6 @@ export const addToCart = (product, quantity) => (dispatch, getState) => {
       },
     });
   } else {
-    // Ürün sepette değilse, yeni bir ürün ekle
     const newCartItem = {
       count: quantity,
       checked: true,
@@ -44,3 +48,50 @@ export const updateCartItem = (productId, count) => ({
   type: "UPDATE_CART_ITEM",
   payload: { productId, count },
 });
+
+///ADRES
+
+export const setAddress = (addresses) => ({
+  type: SET_ADDRESS,
+  payload: addresses,
+});
+export const deleteAddress = (addressId) => {
+  return {
+    type: DELETE_ADDRESS,
+    payload: addressId,
+  };
+};
+export const updateAddress = (address) => {
+  return {
+    type: UPDATE_ADDRESS,
+    payload: address,
+  };
+};
+
+//PAYMENT
+export const setPayment = (paymentData) => {
+  return {
+    type: SET_PAYMENT,
+    payload: paymentData,
+  };
+};
+
+export const addPayment = (paymentData) => {
+  return {
+    type: ADD_PAYMENT,
+    payload: paymentData,
+  };
+};
+
+export const deletePayment = (paymentId) => {
+  return {
+    type: DELETE_PAYMENT,
+    payload: paymentId,
+  };
+};
+export const updatePayment = (payment) => {
+  return {
+    type: UPDATE_PAYMENT,
+    payload: payment,
+  };
+};

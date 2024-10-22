@@ -6,7 +6,7 @@ import CartDropDown from "./CartDropDown";
 
 function CartIcon() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const cartItems = useSelector((state) => state.shoppingCart.cart);
+  const cartItems = useSelector((state) => state.shoppingCart.cart) || []; // Default to an empty array if undefined
   const cartItemCount = cartItems.reduce(
     (total, item) => total + item.count,
     0
@@ -25,7 +25,7 @@ function CartIcon() {
         />
         {cartItemCount > 0 && (
           <span
-            className="absolute top-0 right-0 block w-3 h-3 text-xs text-white bg-red-600 rounded-full flex items-center justify-center"
+            className="absolute top-0 right-0  w-3 h-3 text-xs text-white bg-red-600 rounded-full flex items-center justify-center"
             style={{ transform: "translate(50%, -50%)" }}
           >
             {cartItemCount}

@@ -1,63 +1,108 @@
-import React from "react";
+import gravatarUrl from "gravatar-url";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../redux/actions/clientActions";
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { API, renewAPI } from "../api/api";
 
 const LoginPage = () => {
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      userName: localStorage.getItem("userName") || "",
-      password: "",
-      remember: false,
-    },
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+    remember: true,
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const loginSubmit = (e) => {
+    e.preventDefault();
 
-  const onSubmit = (data) => {
-    dispatch(loginUser(data, navigate));
+    const avatarUrl = gravatarUrl(loginData.email, {
+      size: "50",
+      default: "retro",
+    });
+
+    const userWithAvatar = { ...loginData, avatarUrl };
+
+    console.log("Sending request to API with:", userWithAvatar);
+
+    API.post("/login", userWithAvatar)
+      .then((res) => {
+        renewAPI();
+        console.log("login res:", res.data);
+
+        if (loginData.remember) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("userName", res.data.name || loginData.email);
+        } else {
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("userName", res.data.name || loginData.email);
+        }
+
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            name: res.data.name || loginData.email,
+            email: loginData.email,
+            avatarUrl: res.data.avatarUrl || avatarUrl,
+          },
+        });
+
+        toast.success("Successfully logged in!");
+        navigate(location?.state?.referrer || "/");
+      })
+      .catch((error) => {
+        console.error("Login error:", error.response || error);
+        toast.error("Login failed. Please check your credentials.");
+      });
+  };
+
+  const changeHandler = (e) => {
+    const { name, value, type, checked } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded shadow-md w-full max-w-md"
-      >
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2">Email:</label>
+      <form onSubmit={loginSubmit}>
+        <div className="p-2">
+          <label>Email:</label>
           <input
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={loginData.email}
+            name="email"
             type="email"
-            {...register("userName", { required: true })}
+            onChange={changeHandler}
+            required
           />
         </div>
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2">
-            Password:
-          </label>
+        <div className="p-2">
+          <label>Password:</label>
           <input
+            value={loginData.password}
+            name="password"
             type="password"
-            {...register("password", { required: true })}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={changeHandler}
+            required
           />
         </div>
-        <div className="mb-6">
-          <label className="flex items-center">
-            <input type="checkbox" {...register("remember")} className="mr-2" />
-            Remember Me
-          </label>
+        <div className="p-2">
+          <label>Remember Me</label>
+          <input
+            name="remember"
+            checked={loginData.remember}
+            type="checkbox"
+            onChange={changeHandler}
+          />
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-        >
-          Login
-        </button>
+        <div>
+          <button className="" type="submit">
+            Login
+          </button>
+        </div>
       </form>
     </div>
   );
