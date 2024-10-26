@@ -1,3 +1,4 @@
+import axios from "axios";
 import { API } from "../../api/api";
 
 // Action Types
@@ -89,9 +90,12 @@ export const fetchProducts =
     });
 
     try {
-      const response = await axios.get(url, {
-        params: { limit, offset, filter, sortOption, categoryId },
-      });
+      const response = await API.get(
+        "https://workintech-fe-ecommerce.onrender.com/products",
+        {
+          params: { limit, offset, filter, sortOption, categoryId },
+        }
+      );
 
       dispatch(setProductList(response.data.products));
       dispatch(setTotal(response.data.total));

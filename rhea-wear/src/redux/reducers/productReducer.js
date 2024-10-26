@@ -3,7 +3,7 @@ const initialProductState = {
   productList: [],
   total: 0,
   sortOption: "",
-  limit: 25, // Default limit
+  limit: 25,
   offset: 0,
   currentPage: 1,
   filter: "",
