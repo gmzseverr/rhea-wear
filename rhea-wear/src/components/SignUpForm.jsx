@@ -18,9 +18,7 @@ const SignUpForm = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await API.get(
-          "https://workintech-fe-ecommerce.onrender.com/roles"
-        );
+        const response = await API.get("/roles");
         setRoles(response.data);
       } catch (error) {
         console.error("Error fetching roles:", error);
@@ -35,7 +33,6 @@ const SignUpForm = () => {
     setLoading(true);
     try {
       if (data.role_id === "2") {
-        // Store role id ise ek alanları data içine ekleyelim
         data.store = {
           name: data.store_name,
           phone: data.store_phone,
@@ -43,7 +40,7 @@ const SignUpForm = () => {
           bank_account: data.store_bank_account,
         };
       }
-      await api.post("/signup", data);
+      await API.post("/signup", data);
       alert("You need to click link in email to activate your account!");
       navigate(-1); // Bir önceki sayfaya yönlendir
     } catch (error) {

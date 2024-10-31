@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -26,6 +27,7 @@ import LoginPage from "./pages/LoginPage";
 
 import axios from "axios";
 import { setUser } from "./redux/actions/clientActions";
+import SignUpPage from "./pages/SignUpPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -79,6 +81,7 @@ const App = () => {
         <Route path="/team" element={<TeamPage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/register" element={<SignUpForm />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route
