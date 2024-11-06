@@ -28,6 +28,7 @@
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
     "font-awesome-icons": "^1.6.0",
+    "got": "^14.4.4",
     "gravatar": "^1.8.2",
     "gravatar-url": "^4.0.1",
     "md5": "^2.3.0",
