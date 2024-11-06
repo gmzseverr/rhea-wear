@@ -35,7 +35,7 @@ const OrderPage = () => {
 
   const handlePaymentComplete = (orderDetails) => {
     setOrderDetails(orderDetails);
-    setCurrentStep(3); // Navigate to a success or confirmation page if needed
+    setCurrentStep(3);
   };
 
   return (
