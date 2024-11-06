@@ -6,7 +6,7 @@ function Hero() {
       <div className="flex  items-center justify-between object-contain ">
         <div className=" overflow-hidden object-left   ">
           <img
-            src="public/assets/hero-2.png"
+            src="/assets/hero-2.png"
             alt=""
             className="object-cover  h-full pl-20 sm:pl-0  "
           />
@@ -26,7 +26,7 @@ function Hero() {
         </section>
         <div className=" pl-0 overflow-hidden">
           <img
-            src="public/assets/hero-1.png"
+            src="/assets/hero-1.png"
             alt=""
             className="object-cover w-full h-full  "
           />

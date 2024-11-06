@@ -9,19 +9,19 @@ import {
 
 const items = [
   {
-    src: "public/assets/carousel1.png",
+    src: "/assets/carousel1.png",
     altText: "Slide 1",
     caption: "Slide 1",
     key: 1,
   },
   {
-    src: "public/assets/carusel2.jpeg",
+    src: "/assets/carusel2.jpeg",
     altText: "Slide 2",
     caption: "Slide 2",
     key: 2,
   },
   {
-    src: "public/assets/carusel3.jpeg",
+    src: "/assets/carusel3.jpeg",
     altText: "Slide 3",
     caption: "Slide 3",
     key: 3,
