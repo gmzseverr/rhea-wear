@@ -7,12 +7,19 @@ export default defineConfig({
       "/user": {
         target: "https://workintech-fe-ecommerce.onrender.com",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/user/, "/user"),
       },
     },
   },
   plugins: [react()],
   build: {
-    rollupOptions: {},
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor"; // Create a separate chunk for node_modules
+          }
+        },
+      },
+    },
   },
 });
