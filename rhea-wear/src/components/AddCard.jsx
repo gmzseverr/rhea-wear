@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
 import Cards from "react-credit-cards-2";
+import { API } from "../api/api";
+import { setPayment } from "../redux/actions/shoppingCartActions";
+import { useDispatch } from "react-redux";
 
 const AddCard = () => {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -49,21 +54,14 @@ const AddCard = () => {
     }
 
     try {
-      const response = await axios.post(
-        "/user/card",
-        {
-          card_no: data.card_no,
-          expire_month: Number(data.expire_month),
-          expire_year: Number(data.expire_year),
-          name_on_card: data.name_on_card,
+      const response = await API.post("/user/card", paymentData, {
+        headers: {
+          Authorization: token,
+          "X-USER-ROLE": "client",
         },
-        {
-          headers: {
-            Authorization: token,
-            "X-USER-ROLE": "client",
-          },
-        }
-      );
+      });
+
+      console.log("Added");
 
       const newCard = {
         card_no: data.card_no,
@@ -75,7 +73,8 @@ const AddCard = () => {
       const savedCards = JSON.parse(localStorage.getItem("cards")) || [];
       savedCards.push(newCard);
       localStorage.setItem("cards", JSON.stringify(savedCards));
-      setCards(savedCards);
+      console.log("Card added:", response.data);
+      dispatch(setPayment(response.data));
 
       toast.success("Kart başarıyla eklendi!");
       setIsAddPaymentOpen(false);

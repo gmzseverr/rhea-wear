@@ -66,7 +66,9 @@ function SavedPayment() {
   };
 
   const handleCardSelect = (id) => {
+    const selectedCard = savedCards.find((card) => card.id === id);
     setSelectedCardId(id === selectedCardId ? null : id);
+    onCardSelect(selectedCard);
   };
 
   const handleDeletePayment = async (paymentId) => {
@@ -117,7 +119,6 @@ function SavedPayment() {
 
       console.log("API Response data:", response.data);
 
-      // Assuming response.data is the updated card object
       const updatedCard = response.data;
 
       const updatedCards = savedCards.map((card) =>

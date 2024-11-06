@@ -4,10 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import SavedAddresses from "../components/SavedAddresses";
 import PaymentForm from "../components/PaymentForm";
 import FinalSummaryBox from "../components/FinalSummaryBox";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { API } from "../api/api";
-import CompleteOrder from "./ComplateOrder";
+import CompletePayment from "../components/CompletePayment";
 
 const OrderPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -16,17 +14,9 @@ const OrderPage = () => {
   );
   const dispatch = useDispatch();
   const [selectedAddressId, setSelectedAddressId] = useState(null);
-  const [isAddingNewAddress, setIsAddingNewAddress] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
   const [paymentData, setPaymentData] = useState({});
-  const [isComplete, setIsComplete] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
-
-  const handleNextStep = () => {
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
 
   const handleBackToAddresses = () => {
     setCurrentStep(1);
@@ -37,60 +27,19 @@ const OrderPage = () => {
     setSelectedAddressId(addressId);
   };
 
-  const handleCompleteOrder = async () => {
-    const cart = useSelector((state) => state.shoppingCart.cart);
-
-    if (selectedAddressId && isAgreed) {
-      try {
-        // Sepetteki seçilen ürünleri al
-        const selectedProducts = cart.filter((item) =>
-          selectedItems.has(item.product.id)
-        );
-
-        // Toplam fiyat hesaplama
-        const totalPrice = selectedProducts.reduce(
-          (total, item) => total + item.count * item.product.price,
-          0
-        );
-
-        // Ödeme bilgileri
-        const paymentMethod = paymentData; // Ödeme formundan gelen bilgiler
-
-        const orderData = {
-          address_id: selectedAddressId,
-          order_date: new Date().toISOString(),
-          card_no: paymentMethod.card_no,
-          card_name: paymentMethod.name_on_card,
-          card_expire_month: paymentMethod.expire_month,
-          card_expire_year: paymentMethod.expire_year,
-          card_ccv: paymentMethod.ccv,
-          price: totalPrice,
-          products: selectedProducts.map((item) => ({
-            product_id: item.product.id,
-            count: item.count,
-            detail: item.product.description, // veya başka bir detay
-          })),
-        };
-
-        const response = await API.post("/order", orderData);
-        setOrderDetails(orderData);
-        setIsComplete(true);
-        toast.success("Siparişiniz başarıyla oluşturuldu!");
-
-        // Sepeti sıfırlama veya yönlendirme işlemi burada yapılabilir
-      } catch (error) {
-        console.error("Error creating order:", error);
-        toast.error(
-          "Sipariş oluşturulurken bir hata oluştu, lütfen tekrar deneyin."
-        );
-      }
-    } else {
-      toast.warn("Lütfen adres ve koşulları kabul edin.");
+  const handleNextStep = () => {
+    if (currentStep === 1 && selectedAddressId) {
+      setCurrentStep(2);
     }
   };
 
+  const handlePaymentComplete = (orderDetails) => {
+    setOrderDetails(orderDetails);
+    setCurrentStep(3); // Navigate to a success or confirmation page if needed
+  };
+
   return (
-    <div className="container mx-auto pt-32 sm:px-10 px-40 ">
+    <div className="container mx-auto pt-32 sm:px-10 px-40">
       <h1 className="text-2xl font-bold mb-4 text-[#23A6F0]">Order Page</h1>
       <div className="flex justify-between items-center sm:flex sm:flex-col-reverse">
         <section>
@@ -111,7 +60,7 @@ const OrderPage = () => {
             </div>
           </div>
 
-          {currentStep === 1 && !isAddingNewAddress && (
+          {currentStep === 1 && (
             <div>
               <h2 className="text-xl mb-2">Saved Addresses</h2>
               <SavedAddresses
@@ -119,43 +68,29 @@ const OrderPage = () => {
                 selectedAddressId={selectedAddressId}
               />
               <AddressForm />
-
               <button
                 onClick={handleNextStep}
                 className="bg-[#23A6F0] text-white px-4 py-2 rounded mt-4 ml-4"
                 disabled={!selectedAddressId}
               >
-                Next
+                Save and Continue
               </button>
             </div>
           )}
 
           {currentStep === 2 && (
             <div>
+              <button
+                onClick={handleBackToAddresses}
+                className="bg-gray-300 text-white px-4 py-2 rounded mt-4"
+              >
+                Back to Addresses
+              </button>
               <PaymentForm setPaymentData={setPaymentData} />
-              <div className="flex justify-between">
-                <button
-                  onClick={handleBackToAddresses}
-                  className="bg-gray-300 text-white px-4 py-2 rounded mt-4"
-                >
-                  Back to Addresses
-                </button>
-                <button
-                  onClick={handleCompleteOrder}
-                  className="bg-[#23A6F0] text-white px-4 py-2 rounded mt-4"
-                >
-                  Complete Order
-                </button>
-                {isComplete && (
-                  <CompleteOrder
-                    orderDetails={orderDetails}
-                    onClose={() => setIsComplete(false)}
-                  />
-                )}
-              </div>
             </div>
           )}
         </section>
+
         <section>
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center mb-4 rounded-md border px-4 py-4 shadow-md">
@@ -166,17 +101,19 @@ const OrderPage = () => {
                 onChange={() => setIsAgreed(!isAgreed)}
                 className="mr-2"
               />
-              <label htmlFor="terms" className="text-[#737373] ">
+              <label htmlFor="terms" className="text-[#737373]">
                 I accept the terms and conditions
               </label>
             </div>
             <FinalSummaryBox />
-            <button
-              onClick={handleNextStep}
-              className="bg-[#23A6F0] text-white py-2 px-4 rounded-md font-semibold hover:bg-sky-300"
-            >
-              Save and Continue
-            </button>
+            {currentStep === 2 && (
+              <CompletePayment
+                selectedAddressId={selectedAddressId}
+                paymentData={paymentData}
+                isAgreed={isAgreed}
+                onComplete={handlePaymentComplete}
+              />
+            )}
           </div>
         </section>
       </div>

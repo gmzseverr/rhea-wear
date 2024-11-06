@@ -12,8 +12,8 @@ app.use(
 
 app.use(express.json());
 
-app.post("/user/card", (req, res) => {
-  res.json({ message: "Card saved successfully!" });
+app.post("/order", (req, res) => {
+  res.json({ message: "Order created successfully!" });
 });
 
 const PORT = process.env.PORT || 5000;
