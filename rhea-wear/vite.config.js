@@ -16,7 +16,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
-            return "vendor"; // Create a separate chunk for node_modules
+            return "vendor";
           }
         },
       },

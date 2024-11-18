@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
+  deselectItem,
   removeFromCart,
+  selectItem,
   updateCartItem,
 } from "../redux/actions/shoppingCartActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,12 +13,19 @@ import OrderSummaryBox from "../components/OrderSummaryBox";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.shoppingCart.cart);
-  const [selectedItems, setSelectedItems] = React.useState(
-    new Set(cart.map((item) => item.product.id))
+  const selectedItems = useSelector(
+    (state) => state.shoppingCart.selectedItems
   );
 
-  // artırma
+  // Toplam fiyatı hesaplayan fonksiyon
+  const getTotalPrice = () => {
+    return cart
+      .filter((item) => selectedItems.has(item.product.id)) // Seçili öğeleri filtrele
+      .reduce((total, item) => total + item.count * item.product.price, 0);
+  };
+
   const handleIncrement = (productId) => {
     const item = cart.find((item) => item.product.id === productId);
     if (item) {
@@ -24,7 +34,6 @@ const ShoppingCart = () => {
     }
   };
 
-  //  azaltma
   const handleDecrement = (productId) => {
     const item = cart.find((item) => item.product.id === productId);
     if (item && item.count > 1) {
@@ -33,32 +42,56 @@ const ShoppingCart = () => {
     }
   };
 
-  // kaldırma
   const handleRemove = (productId) => {
     dispatch(removeFromCart(productId));
   };
 
-  // Ürünü seçme/deseçme
   const handleSelectItem = (productId) => {
-    const newSelectedItems = new Set(selectedItems);
-    if (newSelectedItems.has(productId)) {
-      newSelectedItems.delete(productId);
+    if (selectedItems.has(productId)) {
+      dispatch(deselectItem(productId));
     } else {
-      newSelectedItems.add(productId);
+      dispatch(selectItem(productId));
     }
-    setSelectedItems(newSelectedItems);
   };
 
-  // toplam fiyat
-  const getTotalPrice = () => {
-    return cart
-      .filter((item) => selectedItems.has(item.product.id))
-      .reduce((total, item) => total + item.count * item.product.price, 0);
+  const handleProceedToOrder = () => {
+    const selectedProductDetails = Array.from(selectedItems)
+      .map((productId) => {
+        const item = cart.find(
+          (item) => item.product && item.product.id === productId
+        );
+        if (item && item.product) {
+          return {
+            id: item.product.id,
+            name: item.product.name,
+            description: item.product.description,
+            price: item.product.price,
+            count: item.count,
+            detail: item.product.detail,
+          };
+        } else {
+          console.error("Product is undefined for item", productId);
+          return null;
+        }
+      })
+      .filter(Boolean); // null olan öğeleri filtrele
+
+    if (selectedProductDetails.length > 0) {
+      const totalPrice = getTotalPrice();
+      navigate("/order", {
+        state: {
+          selectedItems: selectedProductDetails,
+          totalPrice: totalPrice,
+        },
+      });
+    } else {
+      console.error("No valid products selected");
+    }
   };
 
   return (
-    <div className="pt-32 sm:px-10 px-40 sm:flex-col flex  justify-between items-center">
-      <section className=" ">
+    <div className="pt-32 sm:px-10 px-40 sm:flex-col flex justify-between items-center">
+      <section>
         <h1 className="text-[#23A6F0] text-2xl font-bold pb-10">
           Shopping Cart
         </h1>
@@ -66,14 +99,14 @@ const ShoppingCart = () => {
           <p>Your cart is empty</p>
         ) : (
           <>
-            <ul className="">
+            <ul>
               {cart.map((item) => (
                 <li
                   key={item.product.id}
-                  className="flex flex-col  border-b py-4 w-full justify-between items-center"
+                  className="flex flex-col border-b py-4 w-full justify-between items-center"
                 >
-                  <div className="flex ">
-                    <div className="flex  gap-4">
+                  <div className="flex">
+                    <div className="flex gap-4">
                       <input
                         type="checkbox"
                         checked={selectedItems.has(item.product.id)}
@@ -94,8 +127,8 @@ const ShoppingCart = () => {
                       </section>
                     </div>
                   </div>
-                  <section className="flex items-center  ">
-                    <div className="flex items-center ">
+                  <section className="flex items-center">
+                    <div className="flex items-center">
                       <button
                         onClick={() => handleDecrement(item.product.id)}
                         className="bg-gray-200 px-2 rounded"
@@ -105,7 +138,7 @@ const ShoppingCart = () => {
                       <span className="p-2 text-sm">{item.count}</span>
                       <button
                         onClick={() => handleIncrement(item.product.id)}
-                        className="bg-gray-200 px-2  rounded"
+                        className="bg-gray-200 px-2 rounded"
                       >
                         +
                       </button>
@@ -116,7 +149,7 @@ const ShoppingCart = () => {
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </button>
                     </div>
-                    <div className=" text-zinc-950  font-bold pr-4  ">
+                    <div className="text-zinc-950 font-bold pr-4">
                       <span></span> $
                       {(item.count * item.product.price).toFixed(2)}
                     </div>
@@ -132,8 +165,15 @@ const ShoppingCart = () => {
           </>
         )}
       </section>
-      <section>
-        <OrderSummaryBox />
+      <section className="flex flex-col gap-2">
+        <OrderSummaryBox orderTotal={getTotalPrice()} />
+
+        <button
+          onClick={handleProceedToOrder}
+          className="bg-[#23A6F0] text-white py-2 px-4 rounded-md font-semibold hover:bg-sky-300"
+        >
+          Proceed to Order
+        </button>
       </section>
     </div>
   );

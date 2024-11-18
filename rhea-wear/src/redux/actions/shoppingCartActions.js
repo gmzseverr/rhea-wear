@@ -2,6 +2,7 @@ export const SET_PAYMENT = "SET_PAYMENT";
 export const ADD_PAYMENT = "ADD_PAYMENT";
 export const DELETE_PAYMENT = "DELETE_PAYMENT";
 export const UPDATE_PAYMENT = "UPDATE_PAYMENT";
+export const SET_SELECTED_CARD = "SET_SELECTED_CARD";
 
 export const SET_ADDRESS = "SET_ADDRESS";
 export const DELETE_ADDRESS = "DELETE_ADDRESS";
@@ -10,6 +11,8 @@ export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const SELECT_ITEM = "SELECT_ITEM";
+export const DESELECT_ITEM = "DESELECT_ITEM";
 
 export const addToCart = (product, quantity) => (dispatch, getState) => {
   console.log("Dispatching addToCart action:", { product, quantity });
@@ -47,6 +50,16 @@ export const removeFromCart = (productId) => ({
 export const updateCartItem = (productId, count) => ({
   type: "UPDATE_CART_ITEM",
   payload: { productId, count },
+});
+
+export const selectItem = (productId) => ({
+  type: "SELECT_ITEM",
+  payload: productId,
+});
+
+export const deselectItem = (productId) => ({
+  type: "DESELECT_ITEM",
+  payload: productId,
 });
 
 ///ADRES
@@ -95,3 +108,7 @@ export const updatePayment = (payment) => {
     payload: payment,
   };
 };
+export const setSelectedCard = (card) => ({
+  type: SET_SELECTED_CARD,
+  payload: card,
+});

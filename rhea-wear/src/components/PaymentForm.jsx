@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Cards from "react-credit-cards-2";
+
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setPayment } from "../redux/actions/shoppingCartActions";
-import axios from "axios";
+
 import { toast } from "react-toastify";
 
 import SavedPayment from "./SavedPayment";
@@ -12,6 +11,10 @@ import AddCard from "./AddCard";
 const PaymentForm = () => {
   const cards = useSelector((state) => state.shoppingCart.paymentData);
   const dispatch = useDispatch();
+  const handleCardSelect = (card) => {
+    setSelectedCard(card); // Seçilen kart bilgisi güncelleniyor.
+    console.log("Seçilen Kart:", card);
+  };
 
   const [paymentData, setPaymentData] = useState({
     card_no: "",
@@ -35,8 +38,7 @@ const PaymentForm = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen flex-col">
-      <SavedPayment />
-      <AddCard />
+      <SavedPayment onCardSelect={handleCardSelect} /> <AddCard />
     </div>
   );
 };

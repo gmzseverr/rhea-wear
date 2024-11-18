@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
@@ -61,8 +60,6 @@ const AddCard = () => {
         },
       });
 
-      console.log("Added");
-
       const newCard = {
         card_no: data.card_no,
         expire_month: data.expire_month,
@@ -73,14 +70,12 @@ const AddCard = () => {
       const savedCards = JSON.parse(localStorage.getItem("cards")) || [];
       savedCards.push(newCard);
       localStorage.setItem("cards", JSON.stringify(savedCards));
-      console.log("Card added:", response.data);
       dispatch(setPayment(response.data));
 
       toast.success("Kart başarıyla eklendi!");
       setIsAddPaymentOpen(false);
       reset();
     } catch (error) {
-      console.error("Kart kaydetme hatası:", error.response || error);
       toast.error(
         "Kart kaydedilirken bir hata oluştu: " +
           (error.response?.data?.message || "Lütfen tekrar deneyin.")
@@ -101,6 +96,7 @@ const AddCard = () => {
           <Modal.Title className="text-[#23A6F0]">Kart Ekle</Modal.Title>
         </Modal.Header>
         <Modal.Body className="flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-md">
+          {/* Card preview with animation */}
           <Cards
             number={paymentData.card_no}
             name={paymentData.name_on_card}

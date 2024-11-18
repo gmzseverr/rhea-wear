@@ -9,13 +9,17 @@ import {
   ADD_PAYMENT,
   DELETE_PAYMENT,
   UPDATE_PAYMENT,
+  SELECT_ITEM,
+  DESELECT_ITEM,
+  SET_SELECTED_CARD,
 } from "../actions/shoppingCartActions";
 
 const initialState = {
   cart: [],
   addresses: [],
-
+  selectedItems: new Set(),
   paymentData: [],
+  selectedCard: [],
   loading: false,
   error: null,
 };
@@ -79,6 +83,18 @@ const shoppingCartReducer = (state = initialState, action) => {
         ...state,
         cart: filteredCart,
       };
+    case "SELECT_ITEM":
+      return {
+        ...state,
+        selectedItems: new Set(state.selectedItems).add(action.payload),
+      };
+    case "DESELECT_ITEM":
+      const newSelectedItems = new Set(state.selectedItems);
+      newSelectedItems.delete(action.payload);
+      return {
+        ...state,
+        selectedItems: newSelectedItems,
+      };
 
     //ADRESS
     case SET_ADDRESS:
@@ -127,6 +143,11 @@ const shoppingCartReducer = (state = initialState, action) => {
         paymentData: state.paymentData.map((payment) =>
           payment.id === action.payload.id ? action.payload : payment
         ),
+      };
+    case SET_SELECTED_CARD:
+      return {
+        ...state,
+        selectedCard: action.payload,
       };
 
     default:

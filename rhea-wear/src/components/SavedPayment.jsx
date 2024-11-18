@@ -9,13 +9,15 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { updatePayment } from "../redux/actions/shoppingCartActions";
 import { useDispatch } from "react-redux";
+import AddCard from "./AddCard";
 
-function SavedPayment() {
+function SavedPayment({ onCardSelect }) {
   const [savedCards, setSavedCards] = useState([]);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [currentCard, setCurrentCard] = useState(null);
   const [cardDetails, setCardDetails] = useState({});
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -46,7 +48,6 @@ function SavedPayment() {
         },
       });
 
-      console.log("API Response:", response);
       setSavedCards(response.data);
     } catch (error) {
       console.error(
@@ -67,8 +68,10 @@ function SavedPayment() {
 
   const handleCardSelect = (id) => {
     const selectedCard = savedCards.find((card) => card.id === id);
-    setSelectedCardId(id === selectedCardId ? null : id);
-    onCardSelect(selectedCard);
+    setSelectedCardId(selectedCardId === id ? null : id);
+    if (onCardSelect) {
+      onCardSelect(selectedCardId === id ? null : selectedCard);
+    }
   };
 
   const handleDeletePayment = async (paymentId) => {
@@ -117,19 +120,13 @@ function SavedPayment() {
         },
       });
 
-      console.log("API Response data:", response.data);
-
       const updatedCard = response.data;
-
       const updatedCards = savedCards.map((card) =>
         card.id === updatedCard.id ? updatedCard : card
       );
 
-      console.log("Updated cards:", updatedCards);
-
       setSavedCards(updatedCards);
       dispatch(updatePayment(updatedCard));
-      console.log("Payment updated with:", updatedCard);
       fetchSavedCards();
       toast.success("Kart bilgileri başarıyla güncellendi.");
       setIsEditing(false);
@@ -149,9 +146,7 @@ function SavedPayment() {
 
   return (
     <div className="saved-payments p-4 sm:p-6">
-      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">
-        Kayıtlı Kredi Kartları
-      </h2>
+      <AddCard />
 
       {savedCards.length > 0 ? (
         <div className="place-content-start gap-4 sm:gap-6">
@@ -198,7 +193,9 @@ function SavedPayment() {
                         ? "text-white"
                         : "text-gray-500"
                     }`}
-                  >{`${card.expire_month}/${card.expire_year}`}</p>
+                  >
+                    {`${card.expire_month}/${card.expire_year}`}
+                  </p>
                 </div>
               </div>
 
@@ -276,20 +273,20 @@ function SavedPayment() {
                   />
                 </div>
               </div>
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={updatePaymentCard}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                >
-                  Güncelle
-                </button>
+              <div className="flex justify-end gap-4">
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="ml-2 bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400"
+                  className="bg-gray-400 text-white px-4 py-2 rounded-lg"
                 >
                   İptal
+                </button>
+                <button
+                  type="button"
+                  onClick={updatePaymentCard}
+                  className="bg-[#23A6F0] text-white px-4 py-2 rounded-lg"
+                >
+                  Güncelle
                 </button>
               </div>
             </form>
