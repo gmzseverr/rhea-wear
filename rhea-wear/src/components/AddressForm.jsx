@@ -6,7 +6,7 @@ import { setAddress } from "../redux/actions/shoppingCartActions";
 import { Modal } from "react-bootstrap";
 import { API } from "../api/api";
 
-const AddressForm = () => {
+const AddressForm = ({ fetchSavedAddresses }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const addresses = useSelector((state) => state.shoppingCart.addresses);
@@ -51,6 +51,7 @@ const AddressForm = () => {
 
       console.log("Address added:", response.data);
       dispatch(setAddress(response.data));
+      fetchSavedAddresses();
       toast.success("Adres başarıyla kaydedildi");
       setAddressData({
         title: "",
@@ -69,51 +70,14 @@ const AddressForm = () => {
     }
   };
 
-  const fetchAddresses = async () => {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (!token) {
-      toast.error("Token bulunamadı, lütfen giriş yapın.");
-      return;
-    }
-
-    try {
-      const response = await API.get(
-        "https://workintech-fe-ecommerce.onrender.com/user/address",
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      console.log("Fetched addresses:", response.data);
-      if (Array.isArray(response.data)) {
-        dispatch(setAddress(response.data));
-      } else {
-        console.error("Response data is not an array:", response.data);
-        toast.error("Adres verisi beklenmedik bir biçimde geldi.");
-      }
-    } catch (error) {
-      console.error("Error fetching addresses:", error);
-      toast.error("Adresleri alırken bir hata oluştu");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAddresses();
-    console.log("Initial addresses:", addresses);
-  }, []);
-
   return (
     <div className="">
-      <button
+      <span
+        className="text-[#23A6F0] hover:underline cursor-pointer "
         onClick={() => setIsAddAddressOpen(!isAddAddressOpen)}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
       >
-        Add Address
-      </button>
+        Add New Address
+      </span>
 
       <Modal show={isAddAddressOpen} onHide={() => setIsAddAddressOpen(false)}>
         <Modal.Header closeButton>

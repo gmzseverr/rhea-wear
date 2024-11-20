@@ -12,12 +12,14 @@ import {
   SELECT_ITEM,
   DESELECT_ITEM,
   SET_SELECTED_CARD,
+  ORDER_SUCCESS,
 } from "../actions/shoppingCartActions";
 
 const initialState = {
   cart: [],
   addresses: [],
   selectedItems: new Set(),
+  orders: [],
   paymentData: [],
   selectedCard: [],
   loading: false,
@@ -95,7 +97,19 @@ const shoppingCartReducer = (state = initialState, action) => {
         ...state,
         selectedItems: newSelectedItems,
       };
-
+    case "ORDER_SUCCESS":
+      return {
+        ...state,
+        cart: [], // Clear the cart after a successful order
+        selectedItems: new Set(), // Clear selected items
+        orders: [
+          ...state.orders,
+          {
+            ...action.payload.order, // Store order details (products, price, etc.)
+            date: new Date().toISOString(), // Add the date of the order
+          },
+        ],
+      };
     //ADRESS
     case SET_ADDRESS:
       return {

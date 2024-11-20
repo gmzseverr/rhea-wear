@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Spinner, Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-
 import { toast } from "react-toastify";
 import {
   deleteAddress,
@@ -11,6 +10,7 @@ import {
   updateAddress,
 } from "../redux/actions/shoppingCartActions";
 import { API } from "../api/api";
+import AddressForm from "./AddressForm";
 
 const SavedAddresses = ({ onSelectAddress, selectedAddressId }) => {
   const addresses = useSelector((state) => state.shoppingCart.addresses);
@@ -115,6 +115,7 @@ const SavedAddresses = ({ onSelectAddress, selectedAddressId }) => {
 
   return (
     <section>
+      <AddressForm fetchSavedAddress={fetchSavedAddress} />
       <div className="mt-6">
         {loading ? (
           <div className="flex justify-center items-center h-64">
@@ -123,11 +124,13 @@ const SavedAddresses = ({ onSelectAddress, selectedAddressId }) => {
           </div>
         ) : addresses && addresses.length > 0 ? (
           addresses.map((address) => (
-            <div key={address.id} className="border p-4 rounded-md mt-2">
+            <div key={address.id} className="">
               <section
-                className={`flex flex-col ${
-                  selectedAddressId === address.id ? "bg-blue-100" : ""
-                } p-2`}
+                className={`p-4 sm:p-5 border rounded-lg shadow-md transition-all transform hover:scale-105 cursor-pointer ${
+                  selectedAddressId === address.id
+                    ? "bg-[#23A6F0] border-[#23A6F0] text-white ring-2 ring-[#23A6F0]"
+                    : "bg-white border-gray-300 hover:shadow-lg hover:border-[#23A6F0]"
+                }`}
                 onClick={() => handleAddressSelect(address)}
               >
                 <h4 className="font-bold">{address.title}</h4>
@@ -139,18 +142,18 @@ const SavedAddresses = ({ onSelectAddress, selectedAddressId }) => {
                   {address.city}, {address.district}, {address.neighborhood}
                 </p>
                 <p>{address.address}</p>
-              </section>
-              <section className="flex gap-2 pb-3 justify-end ">
-                <FontAwesomeIcon
-                  className="text-gray-400 hover:text-blue-400 hover:cursor-pointer"
-                  icon={faPenToSquare}
-                  onClick={() => openEditForm(address)}
-                />
-                <FontAwesomeIcon
-                  className="text-gray-400 hover:text-blue-400 hover:cursor-pointer"
-                  icon={faTrashCan}
-                  onClick={() => handleDeleteAddress(address.id)}
-                />
+                <section className="flex gap-2 pb-3 justify-end">
+                  <FontAwesomeIcon
+                    className="text-gray-400 hover:text-blue-400 hover:cursor-pointer"
+                    icon={faPenToSquare}
+                    onClick={() => openEditForm(address)}
+                  />
+                  <FontAwesomeIcon
+                    className="text-gray-400 hover:text-blue-400 hover:cursor-pointer"
+                    icon={faTrashCan}
+                    onClick={() => handleDeleteAddress(address.id)}
+                  />
+                </section>
               </section>
             </div>
           ))

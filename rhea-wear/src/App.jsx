@@ -28,6 +28,7 @@ import LoginPage from "./pages/LoginPage";
 import axios from "axios";
 import { setUser } from "./redux/actions/clientActions";
 import SignUpPage from "./pages/SignUpPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -84,6 +85,7 @@ const App = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route
           path="/order"
           element={<ProtectedRoute element={<OrderPage />} />}

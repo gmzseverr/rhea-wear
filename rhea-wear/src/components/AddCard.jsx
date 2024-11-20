@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
 import Cards from "react-credit-cards-2";
+import "react-credit-cards-2/dist/es/styles-compiled.css";
 import { API } from "../api/api";
 import { setPayment } from "../redux/actions/shoppingCartActions";
 import { useDispatch } from "react-redux";
 
-const AddCard = () => {
+const AddCard = ({ fetchSavedCards }) => {
   const dispatch = useDispatch();
 
   const {
@@ -17,7 +18,6 @@ const AddCard = () => {
     reset,
   } = useForm();
 
-  const [cards, setCards] = useState([]);
   const [isAddPaymentOpen, setIsAddPaymentOpen] = useState(false);
   const [paymentData, setPaymentData] = useState({
     card_no: "",
@@ -26,19 +26,10 @@ const AddCard = () => {
     name_on_card: "",
   });
 
-  useEffect(() => {
-    fetchCards();
-  }, []);
-
-  const fetchCards = () => {
-    const savedCards = JSON.parse(localStorage.getItem("cards")) || [];
-    setCards(savedCards);
-  };
-
   const onSubmit = async (data) => {
     const token = localStorage.getItem("token");
     if (!token) {
-      toast.error("Token bulunamadı, lütfen giriş yapın.");
+      toast.error("Token not found. Please log in.");
       return;
     }
 
@@ -48,7 +39,7 @@ const AddCard = () => {
       (data.expire_year === currentYear &&
         data.expire_month < new Date().getMonth() + 1)
     ) {
-      toast.error("Kartın son kullanma tarihi geçersiz.");
+      toast.error("Invalid expiration date.");
       return;
     }
 
@@ -60,43 +51,30 @@ const AddCard = () => {
         },
       });
 
-      const newCard = {
-        card_no: data.card_no,
-        expire_month: data.expire_month,
-        expire_year: data.expire_year,
-        name_on_card: data.name_on_card,
-      };
-
-      const savedCards = JSON.parse(localStorage.getItem("cards")) || [];
-      savedCards.push(newCard);
-      localStorage.setItem("cards", JSON.stringify(savedCards));
       dispatch(setPayment(response.data));
-
-      toast.success("Kart başarıyla eklendi!");
+      toast.success("Card added successfully!");
       setIsAddPaymentOpen(false);
       reset();
+      fetchSavedCards();
     } catch (error) {
-      toast.error(
-        "Kart kaydedilirken bir hata oluştu: " +
-          (error.response?.data?.message || "Lütfen tekrar deneyin.")
-      );
+      console.error("Error saving card:", error.response || error);
+      toast.error("An error occurred while saving the card. Please try again.");
     }
   };
 
   return (
     <div>
       <span
-        className="text-[#23A6F0] hover:underline cursor-pointer"
+        className="text-[#23A6F0] hover:underline cursor-pointer "
         onClick={() => setIsAddPaymentOpen(true)}
       >
-        Yeni ödeme ekle
+        Add New Payment
       </span>
       <Modal show={isAddPaymentOpen} onHide={() => setIsAddPaymentOpen(false)}>
         <Modal.Header closeButton>
-          <Modal.Title className="text-[#23A6F0]">Kart Ekle</Modal.Title>
+          <Modal.Title className="text-[#23A6F0]">Add Card</Modal.Title>
         </Modal.Header>
         <Modal.Body className="flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-md">
-          {/* Card preview with animation */}
           <Cards
             number={paymentData.card_no}
             name={paymentData.name_on_card}
@@ -113,10 +91,17 @@ const AddCard = () => {
                 type="text"
                 id="card_no"
                 {...register("card_no", {
-                  required: true,
-                  minLength: 16,
-                  maxLength: 16,
+                  required: "Card number is required.",
+                  minLength: {
+                    value: 16,
+                    message: "Card number must be exactly 16 digits.",
+                  },
+                  maxLength: {
+                    value: 16,
+                    message: "Card number must be exactly 16 digits.",
+                  },
                 })}
+                maxLength={16}
                 onChange={(e) =>
                   setPaymentData({ ...paymentData, card_no: e.target.value })
                 }
@@ -124,8 +109,8 @@ const AddCard = () => {
                 placeholder="1234 5678 9012 3456"
               />
               {errors.card_no && (
-                <span className="text-red-500 text-sm">
-                  Kart numarası gerekli ve 16 haneli olmalıdır.
+                <span className="text-red-500 text-xs italic">
+                  {errors.card_no.message}
                 </span>
               )}
             </div>
@@ -141,7 +126,13 @@ const AddCard = () => {
               <input
                 type="text"
                 id="name_on_card"
-                {...register("name_on_card", { required: true })}
+                {...register("name_on_card", {
+                  required: "Name on card is required.",
+                  pattern: {
+                    value: /^[A-Za-z\s]+$/,
+                    message: "Name on card must only contain letters.",
+                  },
+                })}
                 onChange={(e) =>
                   setPaymentData({
                     ...paymentData,
@@ -152,8 +143,8 @@ const AddCard = () => {
                 placeholder="John Doe"
               />
               {errors.name_on_card && (
-                <span className="text-red-500 text-sm">
-                  Kart üzerindeki isim gereklidir.
+                <span className="text-red-500 text-xs italic">
+                  {errors.name_on_card.message}
                 </span>
               )}
             </div>
@@ -170,9 +161,15 @@ const AddCard = () => {
                 type="number"
                 id="expire_month"
                 {...register("expire_month", {
-                  required: true,
-                  min: 1,
-                  max: 12,
+                  required: "Expiry month is required.",
+                  min: {
+                    value: 1,
+                    message: "Enter a valid month (1-12).",
+                  },
+                  max: {
+                    value: 12,
+                    message: "Enter a valid month (1-12).",
+                  },
                 })}
                 onChange={(e) =>
                   setPaymentData({
@@ -181,10 +178,12 @@ const AddCard = () => {
                   })
                 }
                 className="border border-gray-300 p-2 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
-                placeholder="AA"
+                placeholder="MM"
               />
               {errors.expire_month && (
-                <span className="text-red-500 text-sm">Geçerli ay giriniz</span>
+                <span className="text-red-500 text-xs italic">
+                  {errors.expire_month.message}
+                </span>
               )}
             </div>
 
@@ -200,8 +199,11 @@ const AddCard = () => {
                 type="number"
                 id="expire_year"
                 {...register("expire_year", {
-                  required: true,
-                  min: new Date().getFullYear(),
+                  required: "Expiry year is required.",
+                  min: {
+                    value: new Date().getFullYear(),
+                    message: "Enter the current or a future year.",
+                  },
                 })}
                 onChange={(e) =>
                   setPaymentData({
@@ -210,11 +212,11 @@ const AddCard = () => {
                   })
                 }
                 className="border border-gray-300 p-2 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
-                placeholder="YY"
+                placeholder="YYYY"
               />
               {errors.expire_year && (
-                <span className="text-red-500 text-sm">
-                  Mevcut veya gelecekteki bir yıl giriniz
+                <span className="text-red-500 text-xs italic">
+                  {errors.expire_year.message}
                 </span>
               )}
             </div>

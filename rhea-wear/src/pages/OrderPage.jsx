@@ -8,6 +8,7 @@ import OrderSummaryModal from "../components/OrderSummaryModal";
 import { toast } from "react-toastify";
 import { API } from "../api/api";
 import { useLocation } from "react-router-dom";
+import { orderSuccess } from "../redux/actions/shoppingCartActions";
 
 const OrderPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -64,6 +65,13 @@ const OrderPage = () => {
       const response = await API.post("/order", orderPayload, {
         headers: { Authorization: localStorage.getItem("token") },
       });
+
+      dispatch(
+        orderSuccess({
+          order: orderPayload,
+          totalPrice: totalPrice,
+        })
+      );
       setOrderSummary(orderPayload.products);
       setIsModalOpen(true);
       console.log(orderPayload);
@@ -89,8 +97,8 @@ const OrderPage = () => {
   };
 
   return (
-    <div className="container mx-auto pt-32 sm:px-10 px-40 flex justify-between items-center ">
-      <div className="flex justify-between sm:flex-col-reverse">
+    <div className="container mx-auto pt-32 md:px-10 px-40 flex md:flex-col-reverse justify-between items-center ">
+      <div className="flex justify-between ">
         <section className="flex-1">
           {/* Step Indicators */}
           <div className="flex mb-4">
@@ -114,12 +122,11 @@ const OrderPage = () => {
           {/* Step 1: Address Selection */}
           {currentStep === 1 && (
             <div>
-              <h2 className="text-xl mb-2">Saved Addresses</h2>
               <SavedAddresses
                 onSelectAddress={handleSelectAddress}
                 selectedAddressId={selectedAddressId}
               />
-              <AddressForm />
+
               <button
                 onClick={handleNextStep}
                 className="bg-[#23A6F0] text-white px-4 py-2 rounded mt-4"
@@ -168,7 +175,7 @@ const OrderPage = () => {
         onClose={() => setIsModalOpen(false)}
         orderSummary={orderSummary}
       />
-      <section className=" sm:mt-4">
+      <section className=" ">
         <FinalSummaryBox />
       </section>
     </div>

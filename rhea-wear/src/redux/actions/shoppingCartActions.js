@@ -13,6 +13,7 @@ export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const SELECT_ITEM = "SELECT_ITEM";
 export const DESELECT_ITEM = "DESELECT_ITEM";
+export const ORDER_SUCCESS = "ORDER_SUCCESS";
 
 export const addToCart = (product, quantity) => (dispatch, getState) => {
   console.log("Dispatching addToCart action:", { product, quantity });
@@ -60,6 +61,10 @@ export const selectItem = (productId) => ({
 export const deselectItem = (productId) => ({
   type: "DESELECT_ITEM",
   payload: productId,
+});
+export const orderSuccess = (orderData) => ({
+  type: ORDER_SUCCESS,
+  payload: orderData, // Payload should contain the order details
 });
 
 ///ADRES

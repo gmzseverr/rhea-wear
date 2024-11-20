@@ -194,7 +194,9 @@ function Header() {
                 alt="User Avatar"
                 className="rounded-full"
               />
-              <span>{user.name}</span>
+              <span>
+                <NavLink to="/profile"> {user.name}</NavLink>
+              </span>
 
               <button onClick={handleLogout} className="font-bold text-red-600">
                 <FontAwesomeIcon icon={faPowerOff} />

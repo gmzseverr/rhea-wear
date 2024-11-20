@@ -17,7 +17,6 @@ function SavedPayment({ onCardSelect }) {
   const [isEditing, setIsEditing] = useState(false);
   const [currentCard, setCurrentCard] = useState(null);
   const [cardDetails, setCardDetails] = useState({});
-  const [selectedCard, setSelectedCard] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -36,7 +35,7 @@ function SavedPayment({ onCardSelect }) {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
-      toast.error("Token bulunamadı, lütfen giriş yapın.");
+      toast.error("Token not found, please log in.");
       return;
     }
 
@@ -50,11 +49,8 @@ function SavedPayment({ onCardSelect }) {
 
       setSavedCards(response.data);
     } catch (error) {
-      console.error(
-        "Kartlar alınırken bir hata oluştu:",
-        error.response || error
-      );
-      toast.error("Kayıtlı kartlar alınamadı.");
+      console.error("Error fetching cards:", error.response || error);
+      toast.error("Unable to fetch saved cards.");
     }
   };
 
@@ -78,7 +74,7 @@ function SavedPayment({ onCardSelect }) {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
-      toast.error("Token bulunamadı, lütfen giriş yapın.");
+      toast.error("Token not found, please log in.");
       return;
     }
 
@@ -89,10 +85,10 @@ function SavedPayment({ onCardSelect }) {
         },
       });
       setSavedCards(savedCards.filter((card) => card.id !== paymentId));
-      toast.success("Kart başarıyla silindi.");
+      toast.success("Card deleted successfully.");
     } catch (error) {
-      console.error("Ödeme silinirken hata:", error);
-      toast.error("Ödeme silinirken hata oluştu.");
+      console.error("Error deleting payment:", error);
+      toast.error("Error occurred while deleting payment.");
     }
   };
 
@@ -100,7 +96,7 @@ function SavedPayment({ onCardSelect }) {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
-      toast.error("Token bulunamadı, lütfen giriş yapın.");
+      toast.error("Token not found, please log in.");
       return;
     }
 
@@ -128,11 +124,11 @@ function SavedPayment({ onCardSelect }) {
       setSavedCards(updatedCards);
       dispatch(updatePayment(updatedCard));
       fetchSavedCards();
-      toast.success("Kart bilgileri başarıyla güncellendi.");
+      toast.success("Card details updated successfully.");
       setIsEditing(false);
     } catch (error) {
-      console.error("Kart güncellenirken hata:", error);
-      toast.error("Kart güncellenirken hata oluştu.");
+      console.error("Error updating card:", error);
+      toast.error("Error occurred while updating card.");
     }
   };
 
@@ -145,11 +141,11 @@ function SavedPayment({ onCardSelect }) {
   };
 
   return (
-    <div className="saved-payments p-4 sm:p-6">
-      <AddCard />
+    <div className="flex flex-col gap-4 ">
+      <AddCard fetchSavedCards={fetchSavedCards} />
 
       {savedCards.length > 0 ? (
-        <div className="place-content-start gap-4 sm:gap-6">
+        <div className=" flex flex-col gap-4">
           {savedCards.map((card) => (
             <div
               key={card.id}
@@ -160,7 +156,7 @@ function SavedPayment({ onCardSelect }) {
               }`}
               onClick={() => handleCardSelect(card.id)}
             >
-              <div className="flex items-center gap-3 sm:gap-4">
+              <div className="flex items-center gap-3 ">
                 <FontAwesomeIcon
                   icon={faCreditCard}
                   size="2x"
@@ -170,7 +166,7 @@ function SavedPayment({ onCardSelect }) {
                 />
                 <div>
                   <p
-                    className={`font-semibold text-base sm:text-lg ${
+                    className={`font-semibold text-base ${
                       selectedCardId === card.id
                         ? "text-white"
                         : "text-gray-700"
@@ -215,16 +211,18 @@ function SavedPayment({ onCardSelect }) {
           ))}
         </div>
       ) : (
-        <p>Henüz kayıtlı bir kredi kartınız yok.</p>
+        <p>No saved credit cards yet.</p>
       )}
 
       {isEditing && (
         <div className="modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h3 className="text-lg font-bold mb-4">Update Payment</h3>
+            <h3 className="text-lg text-gray-700 font-bold mb-4">
+              Update Payment
+            </h3>
             <form>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-bold py-2 text-gray-700">
                   Card Number
                 </label>
                 <input
@@ -232,44 +230,44 @@ function SavedPayment({ onCardSelect }) {
                   name="card_no"
                   value={maskCardNumber(cardDetails.card_no)}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+                  className="p-1 block w-full border border-gray-300 rounded-md shadow-sm"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Kart Üzerindeki İsim
+                <label className="block text-sm font-bold py-2 text-gray-700">
+                  Name on Card
                 </label>
                 <input
                   type="text"
                   name="name_on_card"
                   value={cardDetails.name_on_card}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+                  className="p-1 block w-full border border-gray-300 rounded-md shadow-sm"
                 />
               </div>
               <div className="flex gap-4">
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Ay
+                  <label className="block text-sm font-bold py-2 text-gray-700">
+                    Expiration Month
                   </label>
                   <input
                     type="text"
                     name="expire_month"
                     value={cardDetails.expire_month}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+                    className="p-1 block w-full border border-gray-300 rounded-md shadow-sm"
                   />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Yıl
+                  <label className="block text-sm font-bold py-2 text-gray-700">
+                    Expiration Year
                   </label>
                   <input
                     type="text"
                     name="expire_year"
                     value={cardDetails.expire_year}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+                    className="p-1 block w-full border border-gray-300 rounded-md shadow-sm"
                   />
                 </div>
               </div>
@@ -277,16 +275,16 @@ function SavedPayment({ onCardSelect }) {
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="bg-gray-400 text-white px-4 py-2 rounded-lg"
+                  className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
                 >
-                  İptal
+                  Cancel
                 </button>
                 <button
                   type="button"
                   onClick={updatePaymentCard}
-                  className="bg-[#23A6F0] text-white px-4 py-2 rounded-lg"
+                  className="bg-[#23A6F0] text-white py-2 px-4 rounded-md hover:bg-[#1a8eb2]"
                 >
-                  Güncelle
+                  Update
                 </button>
               </div>
             </form>
