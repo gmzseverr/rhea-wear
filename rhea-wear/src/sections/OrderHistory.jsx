@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchOrderHistory } from "../redux/actions/orderActions"; // Action to fetch order history
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { API } from "../api/api";
 
 const OrderHistory = () => {
-  const dispatch = useDispatch();
-  const [savedOrders, setSavedOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeOrder, setActiveOrder] = useState(null); // Track the active order for toggling
 
-  const fetchOrderHistory = async () => {
+  const fetchOrder = async () => {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
-      toast.error("Token not found, please log in.");
+      toast.error("No order found, please log in.");
+      setLoading(false); // Set loading to false in case of no token
       return;
     }
 
@@ -22,55 +23,90 @@ const OrderHistory = () => {
           "X-USER-ROLE": "client",
         },
       });
+      console.log("order:", response.data);
 
-      setSavedOrders(response.data);
+      if (response.data.length === 0) {
+        toast.info("No orders found.");
+      }
+      setOrders(response.data); // Directly update the state
     } catch (error) {
-      console.error("Error fetching ordes:", error.response || error);
-      toast.error("Unable to fetch saved order.");
+      console.error("Error fetching orders:", error);
+      toast.error("Error fetching order data.");
+    } finally {
+      setLoading(false); // Set loading to false after data is fetched or an error occurs
     }
   };
 
   useEffect(() => {
-    // Fetch order history when component mounts
-    dispatch(fetchOrderHistory());
-  }, [dispatch]);
+    fetchOrder();
+  }, []);
 
-  if (!orderHistory) {
-    return <p>Loading order history...</p>;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
+  const handleToggleOrderDetails = (orderId) => {
+    setActiveOrder(activeOrder === orderId ? null : orderId);
+  };
+
   return (
-    <div className="mb-8">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-        Order History
-      </h2>
-      {orderHistory.length > 0 ? (
-        <div className="space-y-4">
-          {orderHistory.map((order) => (
+    <div className="container mx-auto pt-32">
+      <h2 className="text-2xl font-bold mb-4">Order History</h2>
+      {orders.length > 0 ? (
+        orders.map((order) => (
+          <div
+            key={order.id}
+            className="order-summary mb-6 p-4 border border-gray-300 rounded-lg"
+          >
+            {/* Order Header with Toggle */}
             <div
-              key={order.id}
-              className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center"
+              onClick={() => handleToggleOrderDetails(order.id)}
+              className="cursor-pointer mb-2"
             >
-              <div>
-                <p className="text-gray-800">Order ID: {order.id}</p>
-                <p className="text-gray-600">Date: {order.date}</p>
-                <p className="text-gray-600">Address: {order.address}</p>
-              </div>
-              <div>
-                <p className="text-xl font-semibold">${order.totalPrice}</p>
-                <p
-                  className={`text-sm ${
-                    order.status === "Delivered"
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }`}
-                >
-                  {order.status}
-                </p>
-              </div>
+              <h3 className="text-xl font-semibold">
+                Order {order.order_date} {/* Directly use the order_date */}
+              </h3>
+              <p className="text-sm text-gray-500">
+                <span className="font-bold">Sipariş Tarihi:</span>{" "}
+                {order.order_date}
+              </p>
             </div>
-          ))}
-        </div>
+
+            {/* Show small product images initially */}
+            <div className="flex mb-4">
+              {order.products.map((product) => (
+                <img
+                  key={product.product_id}
+                  src={product.images[0].url}
+                  alt={product.name}
+                  className="w-12 h-12 object-cover rounded mr-2"
+                />
+              ))}
+            </div>
+
+            {/* Toggle product details */}
+            {activeOrder === order.id && (
+              <div>
+                {order.products.map((product) => (
+                  <div
+                    key={product.product_id}
+                    className="product-details mb-4 p-4 border-t border-gray-200"
+                  >
+                    <h4 className="text-lg font-semibold">{product.name}</h4>
+                    <p className="text-gray-600">Price: ${product.price}</p>
+                    <p className="text-gray-600">Quantity: {product.count}</p>
+                    <p className="text-gray-600">
+                      Description: {product.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Order Total Price */}
+            <div className="font-bold text-lg">Total Price: ${order.price}</div>
+          </div>
+        ))
       ) : (
         <p>No orders found.</p>
       )}

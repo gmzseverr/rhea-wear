@@ -21,7 +21,7 @@ function AboutUsImage() {
       </div>
       <div className=" flex absolute z-10">
         <img
-          src="public/assets/about.png"
+          src="../assets/about.png"
           alt="About Us"
           className="object-contain "
         />

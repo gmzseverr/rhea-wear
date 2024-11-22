@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify"; // For showing toast notifications
+import { toast } from "react-toastify";
 import { logoutUser } from "../redux/actions/clientActions";
+import OrderHistory from "../sections/OrderHistory";
 
 function ProfilePage() {
   const user = useSelector((state) => state.client.user);
   const dispatch = useDispatch();
 
-  // Check if user data exists
   if (!user) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -16,10 +16,9 @@ function ProfilePage() {
     );
   }
 
-  // Handle Logout
   const handleLogout = () => {
-    dispatch(logoutUser()); // Dispatch the logout action
-    toast.success("You have successfully logged out!"); // Show a toast on successful logout
+    dispatch(logoutUser());
+    toast.success("You have successfully logged out!");
   };
 
   return (
@@ -60,6 +59,7 @@ function ProfilePage() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
             Order History
           </h2>
+          <OrderHistory />
           <div className="space-y-4">
             {/* Example Order */}
             <div className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center">

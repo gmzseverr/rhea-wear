@@ -110,6 +110,7 @@ const shoppingCartReducer = (state = initialState, action) => {
           },
         ],
       };
+
     //ADRESS
     case SET_ADDRESS:
       return {

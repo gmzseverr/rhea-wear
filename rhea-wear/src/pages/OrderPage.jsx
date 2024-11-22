@@ -49,6 +49,7 @@ const OrderPage = () => {
 
     const orderPayload = {
       address_id: selectedAddressId,
+      order_date: new Date().toLocaleDateString(),
       card_no: selectedCard.card_no,
       card_name: selectedCard.name_on_card,
       card_expire_month: selectedCard.expire_month,
@@ -74,6 +75,7 @@ const OrderPage = () => {
       );
       setOrderSummary(orderPayload.products);
       setIsModalOpen(true);
+
       console.log(orderPayload);
     } catch (err) {
       console.error("Payment Error:", err);

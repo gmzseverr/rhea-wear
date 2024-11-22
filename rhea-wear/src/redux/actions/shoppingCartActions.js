@@ -63,8 +63,8 @@ export const deselectItem = (productId) => ({
   payload: productId,
 });
 export const orderSuccess = (orderData) => ({
-  type: ORDER_SUCCESS,
-  payload: orderData, // Payload should contain the order details
+  type: "ORDER_SUCCESS",
+  payload: orderData,
 });
 
 ///ADRES
