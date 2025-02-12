@@ -1,4 +1,3 @@
-import axios from "axios";
 import { API } from "../../api/api";
 
 // Action Types
@@ -13,6 +12,10 @@ const SET_BESTSELLERS = "SET_BESTSELLERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_SORT_OPTION = "SET_SORT_OPTION";
 const SET_PRODUCT_DETAIL = "SET_PRODUCT_DETAIL";
+const SET_LIKED_PRODUCTS = "SET_LIKED_PRODUCTS";
+
+export const ADD_TO_LIKED_PRODUCTS = "ADD_TO_LIKED_PRODUCTS";
+export const REMOVE_FROM_LIKED_PRODUCTS = "REMOVE_FROM_LIKED_PRODUCTS";
 
 // Action Creators
 export const setCategories = (categories) => ({
@@ -140,4 +143,49 @@ export const fetchProductById = (productId) => async (dispatch, getState) => {
     console.warn(`Product with ID ${productId} not found in productList`);
     dispatch(setFetchState("ERROR"));
   }
+};
+
+// Action Creators
+export const addToLikedProducts = (product) => {
+  return (dispatch) => {
+    // Redux action'ı çalıştır
+    dispatch({
+      type: "ADD_TO_LIKED_PRODUCTS",
+      payload: product,
+    });
+
+    // localStorage'a kaydet
+    const likedProducts =
+      JSON.parse(localStorage.getItem("likedProducts")) || [];
+    likedProducts.push(product);
+    localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
+  };
+};
+
+export const removeFromLikedProducts = (productId) => {
+  return (dispatch) => {
+    // Redux action'ı çalıştır
+    dispatch({
+      type: "REMOVE_FROM_LIKED_PRODUCTS",
+      payload: productId,
+    });
+
+    // localStorage'dan sil
+    const likedProducts =
+      JSON.parse(localStorage.getItem("likedProducts")) || [];
+    const updatedLikedProducts = likedProducts.filter(
+      (product) => product.id !== productId
+    );
+    localStorage.setItem("likedProducts", JSON.stringify(updatedLikedProducts));
+  };
+};
+export const loadLikedProductsFromStorage = () => {
+  return (dispatch) => {
+    const likedProducts =
+      JSON.parse(localStorage.getItem("likedProducts")) || [];
+    dispatch({
+      type: "SET_LIKED_PRODUCTS",
+      payload: likedProducts,
+    });
+  };
 };

@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { fetchProductById } from "../redux/actions/productActions";
+import {
+  addToLikedProducts,
+  fetchProductById,
+  removeFromLikedProducts,
+} from "../redux/actions/productActions";
 import { addToCart } from "../redux/actions/shoppingCartActions";
 import { Spinner } from "react-bootstrap";
 import Star from "../components/Star";
@@ -23,6 +27,12 @@ function ProductDetail() {
   const { productId } = useParams();
   const productDetail = useSelector((state) => state.product.productDetail);
   const fetchState = useSelector((state) => state.product.fetchState);
+
+  const likedProducts = useSelector((state) => state.product.likedProducts);
+  const isLiked =
+    productDetail &&
+    likedProducts.some((likedProduct) => likedProduct.id === productDetail.id);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -75,6 +85,23 @@ function ProductDetail() {
     });
     dispatch(addToCart(productDetail, quantity));
     toast.success("Product added to cart!");
+  };
+
+  const handleLikeToggle = () => {
+    // Check if the product is already liked
+    const isLiked = likedProducts.some(
+      (likedProduct) => likedProduct.id === productDetail.id
+    );
+
+    if (isLiked) {
+      // Eğer ürün zaten liked'daysa, bunu kaldırıyoruz
+      dispatch(removeFromLikedProducts(productDetail.id)); // ID'yi gönderiyoruz
+      console.log("Product removed from liked.");
+    } else {
+      // Eğer ürün liked değilse, ekliyoruz
+      dispatch(addToLikedProducts(productDetail)); // Tüm ürün objesini gönderiyoruz
+      console.log("Product added to liked.");
+    }
   };
 
   return (
@@ -159,12 +186,17 @@ function ProductDetail() {
               Add To Cart
             </button>
             <section className="flex gap-2">
-              <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200 cursor-pointer">
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="hover:text-red-700"
-                />
+              <div
+                className={`flex justify-center items-center w-8 h-8 rounded-full ${
+                  isLiked
+                    ? "bg-red-500 text-white"
+                    : "bg-gray-200 hover:bg-gray-400"
+                } cursor-pointer`}
+                onClick={handleLikeToggle}
+              >
+                <FontAwesomeIcon icon={faHeart} />
               </div>
+
               <div className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-400 cursor-pointer">
                 <FontAwesomeIcon icon={faCartShopping} />
               </div>

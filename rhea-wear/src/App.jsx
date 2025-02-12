@@ -29,6 +29,7 @@ import axios from "axios";
 import { setUser } from "./redux/actions/clientActions";
 import SignUpPage from "./pages/SignUpPage";
 import ProfilePage from "./pages/ProfilePage";
+import LikedProducts from "./pages/LikedProduct";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,14 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer position="bottom-right" />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeButton={true}
+      />
+
       <Header />
 
       <Routes>
@@ -86,6 +94,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/favorites" element={<LikedProducts />} />
         <Route
           path="/order"
           element={<ProtectedRoute element={<OrderPage />} />}

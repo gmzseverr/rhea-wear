@@ -19,6 +19,7 @@ const initialState = {
   cart: [],
   addresses: [],
   selectedItems: new Set(),
+  likedProducts: [],
   orders: [],
   paymentData: [],
   selectedCard: [],
@@ -100,13 +101,13 @@ const shoppingCartReducer = (state = initialState, action) => {
     case "ORDER_SUCCESS":
       return {
         ...state,
-        cart: [], // Clear the cart after a successful order
-        selectedItems: new Set(), // Clear selected items
+        cart: [],
+        selectedItems: new Set(),
         orders: [
           ...state.orders,
           {
-            ...action.payload.order, // Store order details (products, price, etc.)
-            date: new Date().toISOString(), // Add the date of the order
+            ...action.payload.order,
+            date: new Date().toISOString(),
           },
         ],
       };

@@ -241,7 +241,7 @@ function Header() {
             {isDropdownOpen && <CartDropDown />}
           </div>
 
-          <a href="#" className="sm:hidden flex items-center">
+          <a href="/favorites" className="sm:hidden flex items-center">
             <FontAwesomeIcon icon={faHeart} />
           </a>
           <button onClick={toggleNav} className="hidden sm:flex items-center">

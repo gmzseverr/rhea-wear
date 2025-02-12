@@ -10,6 +10,7 @@ const initialProductState = {
   fetchState: "NOT_FETCHED",
   bestsellers: [],
   productDetail: null,
+  likedProducts: [],
 };
 
 export const productReducer = (state = initialProductState, action) => {
@@ -41,6 +42,23 @@ export const productReducer = (state = initialProductState, action) => {
       return { ...state, sortOption: action.payload };
     case "SET_PRODUCT_DETAIL":
       return { ...state, productDetail: action.payload };
+    case "SET_LIKED_PRODUCTS":
+      return { ...state, likedProducts: action.payload };
+
+    case "ADD_TO_LIKED_PRODUCTS":
+      return {
+        ...state,
+        likedProducts: [...state.likedProducts, action.payload],
+      };
+
+    case "REMOVE_FROM_LIKED_PRODUCTS":
+      return {
+        ...state,
+        likedProducts: state.likedProducts.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
+
     default:
       return state;
   }
