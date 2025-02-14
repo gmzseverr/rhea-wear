@@ -21,7 +21,7 @@ function RowComponent() {
             </button>
           </div>
         </div>
-        <img src="public/assets/none.png" className="sm:w-full sm:mb-5" />
+        <img src="/assets/none.png" className="sm:w-full sm:mb-5" />
       </div>
     </div>
   );
