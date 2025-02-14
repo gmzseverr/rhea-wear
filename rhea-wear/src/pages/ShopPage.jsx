@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import ShopImageSection from "../components/ShopImageSection";
 
@@ -14,10 +14,14 @@ import { Route, Routes } from "react-router-dom";
 function ShopPage() {
   const totalProducts = useSelector((state) => state.product.total);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
