@@ -38,7 +38,7 @@ function Bestsellers() {
   }
 
   return (
-    <div className="pt-32 mx-20 px-20 sm:items-center">
+    <div className="pt-32 mx-20 px-20 sm:items-center  md:px-5">
       <div className="flex flex-col text-center">
         <h2 className="text-[#737373] text-xl font-medium">
           Featured Products
@@ -50,7 +50,7 @@ function Bestsellers() {
           Problems trying to resolve the conflict between
         </p>
       </div>
-      <div className="grid sm:grid-cols-1 grid-cols-4 gap-5 pt-10">
+      <div className="grid md:grid-cols-1 grid-cols-4 gap-5 pt-10">
         {bestsellers.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

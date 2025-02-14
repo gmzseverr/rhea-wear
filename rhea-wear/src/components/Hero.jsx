@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
+  const navigate = useNavigate();
+
+  function handleShop() {
+    navigate("/shop");
+  }
+
   return (
     <div className="pt-10">
       <div className="flex  items-center justify-between object-contain ">
@@ -20,7 +27,10 @@ function Hero() {
           <p className="text-[#737373] smpy-2 py-5">
             We know large objects will act.
           </p>
-          <button className="border border-[#23A6F0] bg-white text-[#23A6F0] px-4 py-2 hover:bg-[#23A6F0] hover:text-white transition duration-300 ease-in-out">
+          <button
+            onClick={handleShop}
+            className="border border-[#23A6F0] bg-white text-[#23A6F0] px-4 py-2 hover:bg-[#23A6F0] hover:text-white transition duration-300 ease-in-out"
+          >
             SHOP NOW
           </button>
         </section>

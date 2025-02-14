@@ -45,7 +45,6 @@ function ProductCard({ product, category }) {
           className="no-underline text-inherit"
         >
           <div className="relative hover:text-red-400">
-            {/* Favorite icon */}
             <div
               className={`absolute top-2 right-2 flex justify-center items-center w-8 h-8 rounded-full shadow-sm ${
                 isLiked
@@ -58,7 +57,7 @@ function ProductCard({ product, category }) {
             </div>
             <img
               src={imageUrl}
-              className="h-96 object-cover cursor-pointer transition-opacity"
+              className="h-96 object-contain cursor-pointer transition-opacity"
               alt={product.name}
             />
           </div>

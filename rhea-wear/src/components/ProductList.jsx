@@ -117,7 +117,7 @@ function ProductList() {
           className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
         />
       </div>
-      <div className="grid grid-cols-4 sm:grid-cols-1 gap-6">
+      <div className="grid grid-cols-5 sm:grid-cols-1 gap-6">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => {
             // Find category for the product
