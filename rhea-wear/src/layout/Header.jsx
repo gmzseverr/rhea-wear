@@ -28,6 +28,7 @@ function Header() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     dispatch({ type: "LOGOUT" });
+    window.location.reload();
   };
 
   const cartItemCount = useSelector((state) =>
@@ -39,6 +40,7 @@ function Header() {
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
+    console.log("Menü durumu:", isNavOpen);
   };
 
   const handleMouseEnterHome = () => {
@@ -250,8 +252,11 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className={`${isNavOpen ? "block" : "hidden"} mt-4 sm:hidden`}>
+      <div
+        className={`${
+          isNavOpen ? "block sm:block md:block" : "hidden"
+        }  hidden mt-4`}
+      >
         <nav className="flex flex-col space-y-4 items-center">
           <NavLink
             to="/"

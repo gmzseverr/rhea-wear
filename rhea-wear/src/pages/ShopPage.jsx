@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import ShopImageSection from "../components/ShopImageSection";
 
 import Clients from "../components/Clients";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGrip, faListUl } from "@fortawesome/free-solid-svg-icons";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductList from "../components/ProductList";
@@ -46,7 +45,6 @@ function ShopPage() {
           </div>
 
           <ShopImageSection />
-
           <section className="flex justify-between items-center py-5 sm:flex sm:flex-col sm:gap-4">
             <div>
               <p className="text-sm text-gray-500 font-bold">
@@ -54,21 +52,6 @@ function ShopPage() {
               </p>
             </div>
 
-            <div className="flex items-center space-x-4">
-              <h4 className="mr-1 text-sm text-gray-500 font-bold">Views:</h4>
-              <div className="flex gap-2">
-                <FontAwesomeIcon
-                  icon={faGrip}
-                  size="lg"
-                  className="border border-gray-300 rounded-md p-1 cursor-pointer hover:bg-gray-200 text-[#252B42]"
-                />
-                <FontAwesomeIcon
-                  icon={faListUl}
-                  size="lg"
-                  className="border border-gray-300 rounded-md p-1 cursor-pointer hover:bg-gray-200 text-gray-500"
-                />
-              </div>
-            </div>
             <div className="flex justify-end gap-2"></div>
           </section>
         </div>

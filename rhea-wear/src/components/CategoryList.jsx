@@ -20,7 +20,6 @@ const CategoryList = () => {
   );
 
   const handleCategoryChange = (gender, code, categoryId) => {
-    // Navigate to the category page
     navigate(`/shop/${gender}/${code}/${categoryId}`);
 
     // Dispatch action to set the filter in the product list

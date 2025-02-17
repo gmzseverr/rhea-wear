@@ -1,6 +1,6 @@
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   addToLikedProducts,
@@ -8,28 +8,32 @@ import {
 } from "../redux/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import NotUserModal from "./NotUserModal";
 
 function ProductCard({ product, category }) {
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isAuthenticated } = useSelector((state) => state.client);
 
   const likedProducts = useSelector((state) => state.product.likedProducts);
 
-  // Check if the current product is liked
   const isLiked = likedProducts.some(
     (likedProduct) => likedProduct.id === product.id
   );
 
   const handleLikeToggle = (e) => {
-    e.preventDefault(); // Prevent navigating when clicking heart
+    e.preventDefault();
+
+    if (!isAuthenticated) {
+      setIsModalOpen(true);
+      return;
+    }
+
     if (isLiked) {
-      // If already liked, remove from liked products
       dispatch(removeFromLikedProducts(product.id));
-      console.log("Product removed from liked.");
       toast.info("Product removed from liked.");
     } else {
-      // If not liked, add to liked products
       dispatch(addToLikedProducts(product));
-      console.log("Product added to liked.");
       toast.success("Product added to liked.");
     }
   };
@@ -77,6 +81,11 @@ function ProductCard({ product, category }) {
           </div>
         </div>
       </section>
+
+      <NotUserModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

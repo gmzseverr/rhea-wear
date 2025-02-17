@@ -36,7 +36,7 @@ function ProductList() {
   const filter =
     useSelector((state) => state.product.filter) || categoryId || "";
   const categories = useSelector((state) => state.product.categories);
-  useParams;
+
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(
@@ -73,9 +73,18 @@ function ProductList() {
     dispatch(setCurrentPage(newPage));
   };
 
-  const handleFilterChange = (newFilter) => {
-    dispatch(setFilter(newFilter));
-    navigate(`${location.pathname}?filter=${newFilter}`);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      // "Enter" tuşuna basıldığında filtreyi güncelle
+      const newFilter = e.target.value.trim();
+      dispatch(setFilter(newFilter)); // Redux'a filtreyi güncelle
+      navigate(`${location.pathname}?filter=${newFilter}`); // URL'de filtreyi güncelle
+    }
+  };
+
+  const handleInputChange = (e) => {
+    // Input alanında yazılan her karakteri Redux'a güncelle
+    dispatch(setFilter(e.target.value));
   };
 
   const handleSortChange = (newSort) => {
@@ -112,15 +121,15 @@ function ProductList() {
         <input
           type="text"
           placeholder="Search..."
-          onChange={(e) => handleFilterChange(e.target.value)}
-          value={filter}
+          onChange={handleInputChange} // Her karakterde Redux'a güncellenir
+          onKeyDown={handleKeyDown} // "Enter" tuşu ile filtre uygulanır
+          value={filter} // Input değeri Redux'tan alınır
           className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
         />
       </div>
       <div className="grid grid-cols-5 sm:grid-cols-1 gap-6">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => {
-            // Find category for the product
             const category = categories.find(
               (cat) => cat.id === product.category_id
             );
@@ -128,7 +137,7 @@ function ProductList() {
               <ProductCard
                 key={product.id}
                 product={product}
-                category={category} // Pass category prop to ProductCard
+                category={category}
               />
             );
           })

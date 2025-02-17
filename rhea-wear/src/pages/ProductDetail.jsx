@@ -20,6 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
+import NotUserModal from "../components/NotUserModal";
 
 function ProductDetail() {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ function ProductDetail() {
   const { productId } = useParams();
   const productDetail = useSelector((state) => state.product.productDetail);
   const fetchState = useSelector((state) => state.product.fetchState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isAuthenticated } = useSelector((state) => state.client);
 
   const likedProducts = useSelector((state) => state.product.likedProducts);
   const isLiked =
@@ -77,6 +80,10 @@ function ProductDetail() {
     images && images[currentImageIndex] ? images[currentImageIndex].url : "";
 
   const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      setIsModalOpen(true);
+      return;
+    }
     const quantity = 1;
     console.log("Adding to cart:", {
       id: productDetail.id,
@@ -88,7 +95,10 @@ function ProductDetail() {
   };
 
   const handleLikeToggle = () => {
-    // Check if the product is already liked
+    if (!isAuthenticated) {
+      setIsModalOpen(true);
+      return;
+    }
     const isLiked = likedProducts.some(
       (likedProduct) => likedProduct.id === productDetail.id
     );
@@ -204,6 +214,10 @@ function ProductDetail() {
                 <FontAwesomeIcon icon={faEye} />
               </div>
             </section>
+            <NotUserModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
           </div>
         </div>
       </div>

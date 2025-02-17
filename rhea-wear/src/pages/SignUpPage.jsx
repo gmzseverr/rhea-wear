@@ -17,6 +17,9 @@ const SignupForm = () => {
   } = useForm();
   const [loading, setLoading] = useState(false);
   const selectedRole = watch("role_id");
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (!roles.length) {

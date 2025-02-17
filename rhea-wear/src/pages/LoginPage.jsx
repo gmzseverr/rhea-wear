@@ -1,5 +1,5 @@
 import gravatarUrl from "gravatar-url";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,6 +8,10 @@ import { API, renewAPI } from "../api/api";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -115,7 +119,7 @@ const LoginPage = () => {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              navigate("/signup");
+              navigate("/register");
             }}
             className="text-[#23A6F0] hover:underline"
           >

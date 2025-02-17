@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API } from "../api/api";
 
 const SignUpForm = () => {
@@ -13,6 +13,10 @@ const SignUpForm = () => {
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Rolleri getirmek için API çağrısı
   useEffect(() => {
@@ -287,6 +291,15 @@ const SignUpForm = () => {
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <a
+            onClick={() => navigate("/login")}
+            className="text-blue-500 hover:underline cursor-pointer"
+          >
+            Log in
+          </a>
+        </p>
       </form>
     </div>
   );
