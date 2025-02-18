@@ -30,6 +30,7 @@ import { setUser } from "./redux/actions/clientActions";
 import SignUpPage from "./pages/SignUpPage";
 import ProfilePage from "./pages/ProfilePage";
 import LikedProducts from "./pages/LikedProduct";
+import Pricing from "./pages/Pricing";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -95,6 +96,7 @@ const App = () => {
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/favorites" element={<LikedProducts />} />
+        <Route path="/pricing" element={<Pricing />} />
         <Route
           path="/order"
           element={<ProtectedRoute element={<OrderPage />} />}

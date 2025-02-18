@@ -152,14 +152,14 @@ function Header() {
           </section>
           <section>
             <NavLink
-              to="/blog"
+              to="/pricing"
               className={({ isActive }) =>
                 `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
                   isActive ? "active-link" : ""
                 }`
               }
             >
-              Blog
+              Pricing
             </NavLink>
           </section>
           <section>
@@ -289,14 +289,14 @@ function Header() {
             About
           </NavLink>
           <NavLink
-            to="/blog"
+            to="/pricing"
             className={({ isActive }) =>
               `text-gray-300 sm:text-[#737373] py-2 rounded-md text-sm font-medium ${
                 isActive ? "active-link" : ""
               }`
             }
           >
-            Blog
+            Pricing
           </NavLink>
           <NavLink
             to="/contact"
