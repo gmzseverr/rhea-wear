@@ -63,7 +63,7 @@ function Header() {
     setIsDropdownOpen((prevState) => !prevState);
   };
   return (
-    <div className="px-52 sm:px-10 my-7" id="top">
+    <div className="sticky top-0 w-full bg-white z-50  px-52 sm:px-10 py-4">
       <div className="flex justify-between items-center sm:justify-around">
         <Link to="/" className="text-[#252B42] font-extrabold text-2xl">
           rhea.

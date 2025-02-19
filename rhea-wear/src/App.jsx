@@ -97,6 +97,7 @@ const App = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/favorites" element={<LikedProducts />} />
         <Route path="/pricing" element={<Pricing />} />
+
         <Route
           path="/order"
           element={<ProtectedRoute element={<OrderPage />} />}
