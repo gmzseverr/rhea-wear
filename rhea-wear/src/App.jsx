@@ -31,6 +31,7 @@ import SignUpPage from "./pages/SignUpPage";
 import ProfilePage from "./pages/ProfilePage";
 import LikedProducts from "./pages/LikedProduct";
 import Pricing from "./pages/Pricing";
+import CallToAction from "./pages/CallToAction";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -97,6 +98,7 @@ const App = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/favorites" element={<LikedProducts />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/action" element={<CallToAction />} />
 
         <Route
           path="/order"

@@ -15,46 +15,72 @@ function Footer() {
             rhea.
           </div>
           <div className="flex gap-3 ">
-            <a href="#" className="text-[#23A6F0] ">
+            <a href="/" className="text-[#23A6F0] ">
               <FontAwesomeIcon icon={faFacebook} size="xl" />
             </a>
-            <a href="#" className="text-[#23A6F0] ">
+            <a href="/" className="text-[#23A6F0] ">
               <FontAwesomeIcon icon={faInstagram} size="xl" />
             </a>
-            <a href="#" className="text-[#23A6F0]">
+            <a href="/" className="text-[#23A6F0]">
               <FontAwesomeIcon icon={faTwitter} size="xl" />
             </a>
           </div>
         </section>
 
-        <div className="grid grid-cols-5  sm:grid-cols-1 gap-x-0">
-          <div className="flex flex-col  ">
+        <div className="grid grid-cols-5 sm:grid-cols-1 gap-x-0">
+          <div className="flex flex-col ">
             <h3 className="text-[#252B42] font-bold text-base py-7 ">
               Company Info
             </h3>
             <ul className="text-[#737373] font-bold text-sm space-y-4 ">
-              <li href="/about">About Us</li>
-              <li href="">Carrier</li>
-              <li href="/deneme">We are hiring</li>
-              <li href="">Blog</li>
+              <li>
+                <a href="/">About Us</a>
+              </li>
+              <li>
+                <a href="/">Carrier</a>
+              </li>
+              <li>
+                <a href="/">We are hiring</a>
+              </li>
+              <li>
+                <a href="/">Blog</a>
+              </li>
             </ul>
           </div>
           <div className="flex flex-col ">
             <h3 className="text-[#252B42] font-bold text-base py-7 ">Legal</h3>
             <ul className="text-[#737373] font-bold text-sm space-y-4 ">
-              <li href="">About Us</li>
-              <li href="">Carrier</li>
-              <li href="">We are hiring</li>
-              <li href="">Blog</li>
+              <li>
+                <a href="/">Privacy Policy</a>
+              </li>
+              <li>
+                <a href="/">Terms of Service</a>
+              </li>
+              <li>
+                <a href="/">Cookie Policy</a>
+              </li>
+              <li>
+                <a href="/">GDPR Compliance</a>
+              </li>
             </ul>
           </div>
           <div className="flex flex-col ">
-            <h3 className="text-[#252B42] font-bold text-base py-7 ">Legal</h3>
+            <h3 className="text-[#252B42] font-bold text-base py-7 ">
+              Services
+            </h3>
             <ul className="text-[#737373] font-bold text-sm space-y-7 ">
-              <li href="">Bussiness Marketings</li>
-              <li href="">User Analytic</li>
-              <li href="">Live Chat</li>
-              <li href="">Unlimited Support</li>
+              <li>
+                <a href="/">Business Marketing</a>
+              </li>
+              <li>
+                <a href="/">User Analytics</a>
+              </li>
+              <li>
+                <a href="/">Live Chat</a>
+              </li>
+              <li>
+                <a href="/">Unlimited Support</a>
+              </li>
             </ul>
           </div>
           <div className="flex flex-col ">
@@ -62,10 +88,18 @@ function Footer() {
               Resources
             </h3>
             <ul className="text-[#737373] font-bold text-sm space-y-4 ">
-              <li href="">IOS & Android</li>
-              <li href="">Watch a Demo</li>
-              <li href="">Customers</li>
-              <li href="">API</li>
+              <li>
+                <a href="/action">iOS & Android App</a>
+              </li>
+              <li>
+                <a href="/">Watch a Demo</a>
+              </li>
+              <li>
+                <a href="/">Customers</a>
+              </li>
+              <li>
+                <a href="/">API</a>
+              </li>
             </ul>
           </div>
           <form className="flex flex-col ">
@@ -78,16 +112,19 @@ function Footer() {
                 placeholder="Your Email"
                 className="bg-[#E6E6E6] rounded-l-md py-3.5 px-3"
               />
-              <button className="bg-[#23A6F0] py-3.5 rounded-r-md px-3 text-white font-bold  ">
+              <button className="bg-[#23A6F0] py-3.5 rounded-r-md px-3 text-white font-bold">
                 Subscribe
               </button>
             </section>
+            <p className="text-[#737373] font-bold text-sm pt-4">
+              Stay updated with our latest offers!
+            </p>
           </form>
         </div>
       </div>
 
       <div className="text-[#737373] font-bold pl-36 bg-[#FAFAFA] text-sm py-6 flex flex-col w-full pt-8 ">
-        <p>Made With Love By Figmaland All Right Reserved</p>
+        <p>Made With Love By Figmaland. All Rights Reserved.</p>
       </div>
     </footer>
   );
