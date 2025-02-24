@@ -49,6 +49,7 @@ function AboutUsPage() {
           <h1 className="font-bold text-slate-800 text-5xl">150K</h1>
           <p className="text-neutral-500 font-bold text-sm">Monthly Visitors</p>
         </div>
+
         <div className="flex flex-col items-center text-center ">
           <h1 className="font-bold text-slate-800 text-5xl">15</h1>
           <p className="text-neutral-500 font-bold text-sm">
@@ -60,6 +61,13 @@ function AboutUsPage() {
           <p className="text-neutral-500 font-bold text-sm">Top Partners</p>
         </div>
       </section>
+      <div className="items-center flex justify-center sm:px-12">
+        <iframe
+          class="aspect-video ..."
+          src="https://www.youtube.com/embed/sh028edqHzg?si=-saV2QY4L0NGsceJ"
+          className=" rounded-2xl sm:w-full sm:h-64 w-3/6 h-96"
+        ></iframe>
+      </div>
       <section className="pb-32">
         <TeamMembers />
       </section>

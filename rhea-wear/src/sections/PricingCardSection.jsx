@@ -62,7 +62,7 @@ function PricingCardSection() {
         </button>
         <p className="text-xs font-bold text-[#252b42]">Yearly</p>
         <p className="bg-[#B2E3FF] rounded-2xl text-xs py-1 px-2 font-semibold text-[#23A6F0]">
-          Save 25%
+          Save {isMonthly ? "30%" : "25%"}
         </p>
       </section>
       <section className="flex items-center sm:flex-col sm:gap-3 gap-1 justify-between ">

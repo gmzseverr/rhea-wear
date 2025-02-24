@@ -34,7 +34,7 @@ function Footer() {
             </h3>
             <ul className="text-[#737373] font-bold text-sm space-y-4 ">
               <li>
-                <a href="/">About Us</a>
+                <a href="/about">About Us</a>
               </li>
               <li>
                 <a href="/">Carrier</a>
@@ -43,7 +43,7 @@ function Footer() {
                 <a href="/">We are hiring</a>
               </li>
               <li>
-                <a href="/">Blog</a>
+                <a href="/featured_products">Featured Products</a>
               </li>
             </ul>
           </div>

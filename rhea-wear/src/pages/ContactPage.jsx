@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import ContactSection from "../components/ContactSection";
+import { Link } from "react-router-dom";
 
 function ContactPage() {
   return (
@@ -47,7 +48,7 @@ function ContactPage() {
           of Classical physics:{" "}
         </p>
         <button className=" border bg-[#23A6F0]  text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-100  transition duration-300 ease-in-out">
-          CONTACT OUR COMPANY
+          <Link to="/subscribe">CONTACT OUR COMPANY</Link>
         </button>
         <div className="flex text-gray-400 pt-10 gap-3 ">
           <FontAwesomeIcon size="lg" icon={faTwitter} />
@@ -80,7 +81,7 @@ function ContactPage() {
               Get Support
             </p>
             <button className="text-xs font-semibold py-2 px-3 border-1 border-[#23A6F0] text-[#23A6F0] rounded-3xl ">
-              Submit Request
+              <Link to="/subscribe">Submit Request</Link>
             </button>
           </div>
           <div className="flex flex-col p-10 items-center gap-2 bg-[#252B42]">
@@ -98,7 +99,7 @@ function ContactPage() {
               Get Support
             </p>
             <button className="text-xs font-semibold py-2 px-3 border-1 border-[#23A6F0] text-[#23A6F0] rounded-3xl ">
-              Submit Request
+              <Link to="/subscribe">Submit Request</Link>
             </button>
           </div>
           <div className="flex flex-col p-10 items-center gap-2 ">
@@ -125,7 +126,7 @@ function ContactPage() {
         <h3 className="font-bold  text-xs">WE Can't WAIT TO MEET YOU</h3>
         <h1 className="font-bold text-center text-5xl ">Let’s Talk</h1>
         <button className="bg-[#23A6F0] text-xs text-white rounded-md py-2 px-3 font-semibold">
-          Try it for free
+          <Link to="/pricing"> Try it for free</Link>
         </button>
       </div>
     </div>

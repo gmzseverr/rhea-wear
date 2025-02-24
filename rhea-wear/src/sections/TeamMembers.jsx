@@ -67,11 +67,11 @@ function TeamMembers() {
           <img
             src="public/assets/editors3.png"
             alt=""
-            className="object-cover w-80 h-60"
+            className="object-cover object-top w-80 h-60"
           />
-          <h5 className="font-bold text-slate-800 pt-8 ">Username</h5>
+          <h5 className="font-bold text-slate-800 pt-8 ">Gamze Sever</h5>
           <h6 className="text-sm text-neutral-500 font-bold py-2 ">
-            Profession
+            Junior Developer
           </h6>
           <div className="flex gap-3 ">
             <a href="#" className="text-[#23A6F0] ">

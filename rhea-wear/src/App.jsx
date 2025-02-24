@@ -32,6 +32,8 @@ import ProfilePage from "./pages/ProfilePage";
 import LikedProducts from "./pages/LikedProduct";
 import Pricing from "./pages/Pricing";
 import CallToAction from "./pages/CallToAction";
+import Subscribe from "./pages/Subscribe";
+import FeaturedProducts from "./pages/FeaturedProducts";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -99,6 +101,8 @@ const App = () => {
         <Route path="/favorites" element={<LikedProducts />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/action" element={<CallToAction />} />
+        <Route path="/subscribe" element={<Subscribe />} />
+        <Route path="/featured_products" element={<FeaturedProducts />} />
 
         <Route
           path="/order"
