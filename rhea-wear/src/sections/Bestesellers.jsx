@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import ProductCard from "../components/ProductCard";
 import { API } from "../api/api";
+import { Spinner } from "reactstrap";
 
 function Bestsellers() {
   const [bestsellers, setBestsellers] = useState([]);
@@ -30,7 +31,11 @@ function Bestsellers() {
   }, []);
 
   if (fetchState === "FETCHING") {
-    return <div>Loading...</div>;
+    return (
+      <Spinner className="m-5 items-center flex " color="primary">
+        Loading...
+      </Spinner>
+    );
   }
 
   if (fetchState === "ERROR") {
