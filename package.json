@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "proxy": "https://workintech-fe-ecommerce.onrender.com",
-    "build": "npm install && cd frontend && npm install && npm run build",
+    "build": "vite build",
     "dev": "vite",
     "start": "vite",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
