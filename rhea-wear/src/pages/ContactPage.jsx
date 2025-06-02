@@ -57,7 +57,7 @@ function ContactPage() {
           <FontAwesomeIcon size="lg" icon={faLinkedin} />
         </div>
       </div>
-      <section className="sm:p-10 ">
+      <section className="sm:p-10 flex flex-col items-center">
         <div className="flex flex-col text-[#252B42] gap-5 sm:px-10 items-center   ">
           <h3 className="font-bold  text-xs">VISIT OUR OFFICE</h3>
           <h1 className="font-bold text-center text-5xl ">
