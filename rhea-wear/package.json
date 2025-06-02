@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "proxy": "https://workintech-fe-ecommerce.onrender.com",
-    "build": "vite build",
+    "build": "npm install --include=dev && vite build",
     "dev": "vite",
     "start": "vite",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
@@ -20,6 +20,7 @@
     "@headlessui/react": "^2.1.1",
     "@heroicons/react": "^2.1.4",
     "@reduxjs/toolkit": "^2.2.7",
+    "@vitejs/plugin-react": "^4.5.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
@@ -57,7 +58,6 @@
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
-    "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",

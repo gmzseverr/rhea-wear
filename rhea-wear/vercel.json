@@ -6,5 +6,6 @@
       "config": { "distDir": "dist" }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "/index.html" }]
+  "routes": [{ "src": "/(.*)", "dest": "/index.html" }],
+  "installCommand": "npm install --include=dev"
 }
