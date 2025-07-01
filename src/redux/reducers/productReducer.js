@@ -46,18 +46,16 @@ export const productReducer = (state = initialProductState, action) => {
       return { ...state, likedProducts: action.payload };
 
     case "ADD_TO_LIKED_PRODUCTS":
-      return {
-        ...state,
-        likedProducts: [...state.likedProducts, action.payload],
-      };
+      const updatedLiked = [...state.likedProducts, action.payload];
+      localStorage.setItem("likedProducts", JSON.stringify(updatedLiked));
+      return { ...state, likedProducts: updatedLiked };
 
     case "REMOVE_FROM_LIKED_PRODUCTS":
-      return {
-        ...state,
-        likedProducts: state.likedProducts.filter(
-          (product) => product.id !== action.payload
-        ),
-      };
+      const filteredLiked = state.likedProducts.filter(
+        (item) => item.id !== action.payload
+      );
+      localStorage.setItem("likedProducts", JSON.stringify(filteredLiked));
+      return { ...state, likedProducts: filteredLiked };
 
     default:
       return state;

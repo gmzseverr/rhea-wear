@@ -8,7 +8,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import gravatarUrl from "gravatar-url";
 import CategoryList from "../components/CategoryList";
@@ -23,6 +23,7 @@ function Header() {
   const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user, isAuthenticated } = useSelector((state) => state.client);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -62,6 +63,10 @@ function Header() {
   const handleCartClick = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
+  const handleFavClick = () => {
+    navigate("/favorites");
+  };
+
   return (
     <div className="sticky top-0 w-full bg-white z-50  px-52 sm:px-10 py-4">
       <div className="flex justify-between items-center sm:justify-around">
@@ -243,9 +248,12 @@ function Header() {
             {isDropdownOpen && <CartDropDown />}
           </div>
 
-          <a href="/favorites" className="sm:hidden flex items-center">
+          <button
+            onClick={handleFavClick}
+            className="sm:hidden flex items-center"
+          >
             <FontAwesomeIcon icon={faHeart} />
-          </a>
+          </button>
           <button onClick={toggleNav} className="hidden sm:flex items-center">
             <FontAwesomeIcon icon={faBars} />
           </button>

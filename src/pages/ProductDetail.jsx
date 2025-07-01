@@ -104,12 +104,10 @@ function ProductDetail() {
     );
 
     if (isLiked) {
-      // Eğer ürün zaten liked'daysa, bunu kaldırıyoruz
-      dispatch(removeFromLikedProducts(productDetail.id)); // ID'yi gönderiyoruz
+      dispatch(removeFromLikedProducts(productDetail.id));
       console.log("Product removed from liked.");
     } else {
-      // Eğer ürün liked değilse, ekliyoruz
-      dispatch(addToLikedProducts(productDetail)); // Tüm ürün objesini gönderiyoruz
+      dispatch(addToLikedProducts(productDetail));
       console.log("Product added to liked.");
     }
   };

@@ -10,8 +10,10 @@ function ProfilePage() {
 
   if (!user) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p>Loading user data...</p>
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <p className="text-gray-600 text-lg animate-pulse">
+          Loading user data...
+        </p>
       </div>
     );
   }
@@ -22,32 +24,30 @@ function ProfilePage() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col items-center py-12">
-      <div className="max-w-4xl w-full bg-white p-8 rounded-lg shadow-lg">
+    <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen py-12 px-4">
+      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl p-10 space-y-12">
         {/* Profile Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-6">
             <img
               src={user.avatarUrl || "https://via.placeholder.com/150"}
               alt="Profile"
-              className="w-24 h-24 rounded-full border-4 border-[#23A6F0] mr-6"
+              className="w-28 h-28 rounded-full border-4 border-[#23A6F0] shadow-md"
             />
             <div>
-              <h1 className="text-3xl font-semibold text-gray-900">
+              <h1 className="text-3xl font-bold text-gray-900">
                 {user.name || user.email}
               </h1>
-              <p className="text-lg text-gray-600">{user.email}</p>
+              <p className="text-gray-600">{user.email}</p>
             </div>
           </div>
-          <div className="flex space-x-4">
-            {/* Edit Profile Button */}
-            <button className="bg-[#23A6F0] text-white px-6 py-2 rounded-md hover:bg-[#1e90b6] transition duration-200">
+          <div className="flex gap-4">
+            <button className="bg-[#23A6F0] hover:bg-[#1e90b6] text-white px-6 py-2 rounded-lg transition shadow-md">
               Edit Profile
             </button>
-            {/* Logout Button */}
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-200"
+              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition shadow-md"
             >
               Logout
             </button>
@@ -55,56 +55,36 @@ function ProfilePage() {
         </div>
 
         {/* Order History Section */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+        <section>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Order History
           </h2>
           <OrderHistory />
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Example Order */}
-            <div className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center">
-              <div>
-                <p className="text-gray-800">Order ID: 1</p>
-                <p className="text-gray-600">Date: 2024-10-01</p>
+            <div className="bg-white border rounded-xl p-5 shadow hover:shadow-md transition">
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-gray-800 font-medium">Order ID: 1</p>
+                <span className="text-green-600 text-sm font-semibold">
+                  Delivered
+                </span>
               </div>
-              <div>
-                <p className="text-xl font-semibold">$50</p>
-                <p className="text-sm text-green-600">Delivered</p>
-              </div>
+              <p className="text-gray-500 text-sm">Date: 2024-10-01</p>
+              <p className="text-xl font-semibold mt-2">$50</p>
             </div>
           </div>
         </section>
 
-        {/* Liked Items Section */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-            Liked Items
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* Example Liked Item */}
-            <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-              <img
-                src="https://via.placeholder.com/100"
-                alt="Leather Jacket"
-                className="w-full h-32 object-cover rounded-md mb-4"
-              />
-              <p className="text-gray-800 font-semibold">Leather Jacket</p>
-              <p className="text-gray-600">$200</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Account Settings Section */}
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Account Settings
           </h2>
-          <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+          <div className="bg-gray-100 border rounded-xl p-6 shadow-sm">
             <p className="text-gray-600">
               Change your password, manage email notifications, or upgrade your
               plan.
             </p>
-            <button className="bg-[#23A6F0] text-white px-6 py-2 rounded-md mt-4 hover:bg-[#1e90b6] transition duration-200">
+            <button className="mt-4 bg-[#23A6F0] text-white px-6 py-2 rounded-lg hover:bg-[#1e90b6] transition shadow">
               Manage Settings
             </button>
           </div>

@@ -19,3 +19,5 @@ export let API = createApiInstance();
 export const renewAPI = () => {
   API = createApiInstance();
 };
+
+export const baseURL = "https://workintech-fe-ecommerce.onrender.com";

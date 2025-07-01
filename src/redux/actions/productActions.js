@@ -117,7 +117,6 @@ export const fetchCategories = () => async (dispatch) => {
     dispatch(setCategories(response.data));
   } catch (error) {
     console.error("Failed to fetch categories:", error);
-    // You might also want to dispatch an action to show an error message to the user.
   }
 };
 export const fetchProductById = (productId) => async (dispatch, getState) => {
@@ -145,47 +144,21 @@ export const fetchProductById = (productId) => async (dispatch, getState) => {
   }
 };
 
-// Action Creators
-export const addToLikedProducts = (product) => {
-  return (dispatch) => {
-    // Redux action'ı çalıştır
-    dispatch({
-      type: "ADD_TO_LIKED_PRODUCTS",
-      payload: product,
-    });
+export const addToLikedProducts = (product) => (dispatch, getState) => {
+  dispatch({ type: ADD_TO_LIKED_PRODUCTS, payload: product });
 
-    // localStorage'a kaydet
-    const likedProducts =
-      JSON.parse(localStorage.getItem("likedProducts")) || [];
-    likedProducts.push(product);
-    localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
-  };
+  const { likedProducts } = getState().product;
+  localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
 };
 
-export const removeFromLikedProducts = (productId) => {
-  return (dispatch) => {
-    // Redux action'ı çalıştır
-    dispatch({
-      type: "REMOVE_FROM_LIKED_PRODUCTS",
-      payload: productId,
-    });
+export const removeFromLikedProducts = (productId) => (dispatch, getState) => {
+  dispatch({ type: REMOVE_FROM_LIKED_PRODUCTS, payload: productId });
 
-    // localStorage'dan sil
-    const likedProducts =
-      JSON.parse(localStorage.getItem("likedProducts")) || [];
-    const updatedLikedProducts = likedProducts.filter(
-      (product) => product.id !== productId
-    );
-    localStorage.setItem("likedProducts", JSON.stringify(updatedLikedProducts));
-  };
+  const { likedProducts } = getState().product;
+  localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
 };
-export const loadLikedProductsFromStorage = () => {
-  return (dispatch) => {
-    const likedProducts =
-      JSON.parse(localStorage.getItem("likedProducts")) || [];
-    dispatch({
-      type: "SET_LIKED_PRODUCTS",
-      payload: likedProducts,
-    });
-  };
+
+export const loadLikedProductsFromStorage = () => (dispatch) => {
+  const liked = JSON.parse(localStorage.getItem("likedProducts")) || [];
+  dispatch({ type: SET_LIKED_PRODUCTS, payload: liked });
 };
